@@ -18,16 +18,24 @@ logger.add("heylisten.log", rotation="10 MB", retention="7 days")
 
 
 class PlaylistMonitor:
-    def __init__(self):
+    def __init__(
+        self,
+        client_id: str,
+        client_secret: str,
+        redirect_uri: str,
+        playlist_id: str,
+        market: str = "SE",
+        cache_dir: Path = Path("cache"),
+    ):
         # Spotify API credentials
-        self.client_id = os.getenv("SPOT_CLIENT_ID")
-        self.client_secret = os.getenv("SPOT_CLIENT_SECRET")
-        self.redirect_uri = os.getenv("SPOT_REDIRECT_URI")
-        self.playlist_id = os.getenv("SPOT_PLAYLIST_ID")
-        self.market = os.getenv("SPOT_MARKET", "SE")
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.redirect_uri = redirect_uri
+        self.playlist_id = playlist_id
+        self.market = market
 
-        # Check if required environment variables are set
-        self._validate_env_vars()
+        # Check if required parameters are valid
+        self._validate_params()
 
         # Setup Spotify client
         self.sp = spotipy.Spotify(
@@ -40,30 +48,28 @@ class PlaylistMonitor:
         )
 
         # Initialize cache directory
-        self.cache_dir = Path("cache")
+        self.cache_dir = cache_dir
         self.cache_dir.mkdir(exist_ok=True)
         self.cache_file = self.cache_dir / f"playlist_{self.playlist_id}.json"
 
         # Load cached playlist data if available
         self.cached_playlist = self._load_cache()
 
-    def _validate_env_vars(self):
-        """Validate that all required environment variables are set."""
-        missing_vars = []
-        for var in [
-            "SPOT_CLIENT_ID",
-            "SPOT_CLIENT_SECRET",
-            "SPOT_REDIRECT_URI",
-            "SPOT_PLAYLIST_ID",
+    def _validate_params(self):
+        """Validate that all required parameters are set."""
+        missing_params = []
+        for param_name, param_value in [
+            ("client_id", self.client_id),
+            ("client_secret", self.client_secret),
+            ("redirect_uri", self.redirect_uri),
+            ("playlist_id", self.playlist_id),
         ]:
-            if not os.getenv(var):
-                missing_vars.append(var)
+            if not param_value:
+                missing_params.append(param_name)
 
-        if missing_vars:
-            logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
-            raise EnvironmentError(
-                f"Missing required environment variables: {', '.join(missing_vars)}"
-            )
+        if missing_params:
+            logger.error(f"Missing required parameters: {', '.join(missing_params)}")
+            raise ValueError(f"Missing required parameters: {', '.join(missing_params)}")
 
     def _load_cache(self) -> Optional[Dict[str, Any]]:
         """Load playlist data from cache if available."""
@@ -178,7 +184,8 @@ class PlaylistMonitor:
                 self._compare_playlists(self.cached_playlist, current_playlist)
             else:
                 logger.info(
-                    f"Initial load of playlist '{current_playlist['name']}' with {len(current_playlist['tracks'])} tracks"
+                    f"Initial load of playlist '{current_playlist['name']}'"
+                    + " with {len(current_playlist['tracks'])} tracks"
                 )
 
             # Update cache
@@ -190,7 +197,35 @@ class PlaylistMonitor:
 
 def main():
     """Main function to run the playlist monitor."""
-    monitor = PlaylistMonitor()
+    # Get environment variables
+    client_id = os.getenv("SPOT_CLIENT_ID")
+    client_secret = os.getenv("SPOT_CLIENT_SECRET")
+    redirect_uri = os.getenv("SPOT_REDIRECT_URI")
+    playlist_id = os.getenv("SPOT_PLAYLIST_ID")
+    market = os.getenv("SPOT_MARKET", "SE")
+
+    # Validate environment variables
+    missing_vars = []
+    for var_name, var_value in [
+        ("SPOT_CLIENT_ID", client_id),
+        ("SPOT_CLIENT_SECRET", client_secret),
+        ("SPOT_REDIRECT_URI", redirect_uri),
+        ("SPOT_PLAYLIST_ID", playlist_id),
+    ]:
+        if not var_value:
+            missing_vars.append(var_name)
+
+    if missing_vars:
+        logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
+        raise EnvironmentError(f"Missing required environment variables: {', '.join(missing_vars)}")
+
+    monitor = PlaylistMonitor(
+        client_id=client_id,
+        client_secret=client_secret,
+        redirect_uri=redirect_uri,
+        playlist_id=playlist_id,
+        market=market,
+    )
 
     # Do an initial check
     monitor.check_for_changes()
