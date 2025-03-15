@@ -87,6 +87,18 @@ class PlaylistMonitor:
         """Fetch playlist data from Spotify API."""
         try:
             playlist = self.sp.playlist(self.playlist_id)
+            tracks_items = playlist["tracks"]["items"]
+
+            # Handle pagination to get all tracks
+            next_page = playlist["tracks"]["next"]
+            while next_page:
+                logger.debug(f"Fetching additional tracks page: {next_page}")
+                tracks_page = self.sp.next(playlist["tracks"])
+                tracks_items.extend(tracks_page["items"])
+                next_page = tracks_page["next"]
+
+            logger.info(f"Fetched {len(tracks_items)} total tracks from playlist")
+
             # Extract relevant information (optimization to reduce cache size)
             return {
                 "id": playlist["id"],
@@ -104,7 +116,7 @@ class PlaylistMonitor:
                         if "added_by" in item and item["added_by"]
                         else None,
                     }
-                    for item in playlist["tracks"]["items"]
+                    for item in tracks_items
                 ],
             }
         except Exception as e:
@@ -176,9 +188,10 @@ def main():
     monitor.check_for_changes()
 
     # Schedule periodic checks (every 5 minutes)
-    schedule.every(5).minutes.do(monitor.check_for_changes)
+    period = 5
+    schedule.every(period).seconds.do(monitor.check_for_changes)
 
-    logger.info("Playlist monitor started, checking for changes every 5 minutes")
+    logger.info(f"Playlist monitor started, checking for changes every {period} seconds")
 
     # Keep the script running
     while True:
