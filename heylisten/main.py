@@ -8,7 +8,7 @@ import schedule
 import spotipy
 from dotenv import load_dotenv
 from loguru import logger
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyClientCredentials
 
 # Load environment variables
 load_dotenv()
@@ -22,7 +22,6 @@ class PlaylistMonitor:
         self,
         client_id: str,
         client_secret: str,
-        redirect_uri: str,
         playlist_id: str,
         market: str = "SE",
         cache_dir: Path = Path("cache"),
@@ -30,7 +29,6 @@ class PlaylistMonitor:
         # Spotify API credentials
         self.client_id = client_id
         self.client_secret = client_secret
-        self.redirect_uri = redirect_uri
         self.playlist_id = playlist_id
         self.market = market
 
@@ -39,11 +37,9 @@ class PlaylistMonitor:
 
         # Setup Spotify client
         self.sp = spotipy.Spotify(
-            auth_manager=SpotifyOAuth(
+            auth_manager=SpotifyClientCredentials(
                 client_id=self.client_id,
                 client_secret=self.client_secret,
-                redirect_uri=self.redirect_uri,
-                scope="playlist-read-collaborative",
             )
         )
 
@@ -61,7 +57,6 @@ class PlaylistMonitor:
         for param_name, param_value in [
             ("client_id", self.client_id),
             ("client_secret", self.client_secret),
-            ("redirect_uri", self.redirect_uri),
             ("playlist_id", self.playlist_id),
         ]:
             if not param_value:
@@ -200,7 +195,7 @@ def main():
     # Get environment variables
     client_id = os.getenv("SPOT_CLIENT_ID")
     client_secret = os.getenv("SPOT_CLIENT_SECRET")
-    redirect_uri = os.getenv("SPOT_REDIRECT_URI")
+    # redirect_uri = os.getenv("SPOT_CLIENT_REDIRECT_URI")
     playlist_id = os.getenv("SPOT_PLAYLIST_ID")
     market = os.getenv("SPOT_MARKET", "SE")
 
@@ -209,7 +204,6 @@ def main():
     for var_name, var_value in [
         ("SPOT_CLIENT_ID", client_id),
         ("SPOT_CLIENT_SECRET", client_secret),
-        ("SPOT_REDIRECT_URI", redirect_uri),
         ("SPOT_PLAYLIST_ID", playlist_id),
     ]:
         if not var_value:
@@ -222,7 +216,6 @@ def main():
     monitor = PlaylistMonitor(
         client_id=client_id,
         client_secret=client_secret,
-        redirect_uri=redirect_uri,
         playlist_id=playlist_id,
         market=market,
     )
