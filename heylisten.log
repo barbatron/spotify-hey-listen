@@ -365,3 +365,603 @@
 2025-03-15 16:17:50.538 | INFO     | __main__:_compare_playlists:117 - No changes detected in playlist
 2025-03-15 16:17:50.540 | DEBUG    | __main__:_save_cache:84 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
 2025-03-15 16:17:55.556 | INFO     | __main__:check_for_changes:154 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:18:14.113 | DEBUG    | __main__:_load_cache:70 - Loading cached playlist data from cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:18:14.113 | INFO     | __main__:check_for_changes:166 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:18:14.616 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=100&limit=100&additional_types=track
+2025-03-15 16:18:15.241 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:15.761 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:16.309 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:16.979 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:17.452 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:18.021 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:18.510 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:19.055 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:19.526 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:20.061 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:20.558 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:21.231 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:21.904 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:22.622 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:18:23.226 | DEBUG    | __main__:_fetch_playlist_data:95 - Fetching additional tracks page: https://api.spotify.com/v1/playlists/4Go6LTKodDqQYkqOGC8ZiH/tracks?offset=200&limit=100&additional_types=track
+2025-03-15 16:25:40.525 | DEBUG    | __main__:_load_cache:71 - Loading cached playlist data from cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:25:40.526 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:25:41.102 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=5cWQvykSohTzcUjg94ryIh)
+2025-03-15 16:25:41.102 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:41.392 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:41.392 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=6LaATz4EgnnGXUhbc5fCAO)
+2025-03-15 16:25:41.392 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:41.796 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:41.797 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=62mBpGPmlAVKUi0WkR0oPQ)
+2025-03-15 16:25:41.797 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:42.105 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:42.105 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=4jkOkgO0h0HQ7HE01TxkHB)
+2025-03-15 16:25:42.105 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:42.339 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:25:42.339 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:25:42.342 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:25:42.349 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:25:42.349 | INFO     | __main__:main:201 - Playlist monitor started, checking for changes every 5 seconds
+2025-03-15 16:25:47.372 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:25:47.955 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:25:47.955 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:48.264 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:48.264 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:25:48.264 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:48.562 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:48.562 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:25:48.562 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:48.866 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:48.866 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:25:48.866 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:49.080 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:25:49.081 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:25:49.083 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:25:49.089 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:25:54.106 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:25:54.628 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:25:54.628 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:54.914 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:54.915 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:25:54.915 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:55.201 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:55.202 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:25:55.202 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:55.519 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:25:55.519 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:25:55.519 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:25:55.719 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:25:55.719 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:25:55.723 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:25:55.728 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:00.747 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:01.177 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:01.177 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:01.462 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:01.462 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:01.462 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:01.767 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:01.767 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:01.767 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:02.184 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:02.185 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:02.185 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:02.391 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:26:02.391 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:26:02.394 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:02.400 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:07.422 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:08.123 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:08.123 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:08.427 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:08.428 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:08.428 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:08.681 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:08.682 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:08.682 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:08.950 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:08.950 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:08.951 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:09.242 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:26:09.243 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:26:09.246 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:09.251 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:14.276 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:14.882 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:14.883 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:15.167 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:15.167 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:15.167 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:15.486 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:15.486 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:15.486 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:15.795 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:15.795 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:15.795 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:16.011 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:26:16.011 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:26:16.012 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:16.015 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:21.027 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:21.542 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:21.542 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:21.934 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:21.935 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:21.936 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:22.228 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:22.228 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:22.228 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:22.534 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:22.534 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:22.534 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:23.063 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:26:23.064 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:26:23.067 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:23.073 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:28.096 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:28.709 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:28.709 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:29.019 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:29.019 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:29.019 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:29.312 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:29.312 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:29.312 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:29.614 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:29.614 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:29.614 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:29.823 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:26:29.823 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:26:29.824 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:29.826 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:34.845 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:35.366 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:35.367 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:35.593 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:35.593 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:35.593 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:35.867 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:35.868 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:35.868 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:36.176 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:36.177 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:36.177 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:36.452 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:26:36.453 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:26:36.455 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:36.461 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:41.484 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:42.123 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:42.124 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:42.415 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:42.416 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:42.416 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:42.694 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:42.695 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:42.695 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:42.965 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:42.965 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:42.965 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:43.178 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:26:43.179 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:26:43.182 | INFO     | __main__:_compare_playlists:139 - Detected changes in playlist 'Namnge playlist' (ID: 4Go6LTKodDqQYkqOGC8ZiH)
+2025-03-15 16:26:43.182 | INFO     | __main__:_compare_playlists:166 - Summary: 0 track(s) added, 0 track(s) removed
+2025-03-15 16:26:43.187 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:48.213 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:48.784 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:48.784 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:49.080 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:49.080 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:49.080 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:49.348 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:49.348 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:49.348 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:49.687 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:49.687 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:49.687 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:49.982 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:26:49.982 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:26:49.986 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:49.993 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:26:55.014 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:26:55.463 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:26:55.463 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:55.812 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:55.813 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:26:55.813 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:56.144 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:56.144 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:26:56.144 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:56.424 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:26:56.424 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:26:56.425 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:26:56.664 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:26:56.664 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:26:56.668 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:26:56.675 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:27:01.700 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:27:02.176 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:27:02.177 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:02.442 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:27:02.442 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:27:02.442 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:02.719 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:27:02.719 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:27:02.719 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:03.000 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:27:03.000 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:27:03.000 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:03.216 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:27:03.216 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:27:03.219 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:27:03.225 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:27:08.247 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:27:08.851 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:27:08.851 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:09.254 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:27:09.254 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:27:09.254 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:09.548 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:27:09.548 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:27:09.548 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:09.865 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:27:09.865 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:27:09.866 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:27:10.171 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:27:10.171 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:27:10.174 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:27:10.180 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:29:50.725 | DEBUG    | __main__:_load_cache:71 - Loading cached playlist data from cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:29:50.725 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:29:51.158 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:29:51.158 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:51.451 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:29:51.451 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:29:51.451 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:51.758 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:29:51.759 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:29:51.759 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:52.064 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:29:52.065 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:29:52.065 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:52.297 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:29:52.297 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:29:52.299 | INFO     | __main__:_compare_playlists:139 - Detected changes in playlist 'Namnge playlist' (ID: 4Go6LTKodDqQYkqOGC8ZiH)
+2025-03-15 16:29:52.299 | INFO     | __main__:_compare_playlists:160 - Added: Jetzt neu: alles wie früher - Kmyle Remix by Extrawelt, Kmyle (added by: fraktalis)
+2025-03-15 16:29:52.299 | INFO     | __main__:_compare_playlists:160 - Added: I Love Acid by Luke Vibert (added by: fraktalis)
+2025-03-15 16:29:52.299 | INFO     | __main__:_compare_playlists:160 - Added: Mountains and Streams - Zonedog Dolbytape Mix by Lord Tang, Zonedog (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: All Around Us by Procs (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Atmosphere by Harmonia & Eno '76 (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Stamps by Lord Tang (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: The Grass (feat Wizard Apprentice) by Nathan Fake, Wizard Apprentice (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Orientalic by KoxBox (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: LATE PASS by Jel (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Riod by Juan Atkins, Moritz Von Oswald (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Meliorism by Out Of Place Artefacts, Vril, Rødhåd (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: In Your Mind (Reflections) by Hyperloop (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Game One by Infiniti (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Mouth by Ghost Culture (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Yesterday Faded - Edit by Daniel Avery (added by: barbatron)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Be Loved - Daniel Avery's 'Divided Love' Remix by Headman, Daniel Avery (added by: barbatron)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Drone Logic by Daniel Avery (added by: barbatron)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Vimana by Nathan Fake (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Tjejer - DJ Lily Dehydrated Mix by Emma Nydén, DJ Lily (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Fahrradgabel by Stimming (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Homicidal Diary by Air Liquide (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Orange by Ivy Lab, Two Fingers, Amon Tobin (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Mean Boyfriend by Modeselektor (added by: fraktalis)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:160 - Added: Disco Mina by Paul Sabin (added by: barbatron)
+2025-03-15 16:29:52.300 | INFO     | __main__:_compare_playlists:164 - Removed: Jetzt neu: alles wie früher - Kmyle Remix by Extrawelt, Kmyle
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: I Love Acid by Luke Vibert
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Mountains and Streams - Zonedog Dolbytape Mix by Lord Tang, Zonedog
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: All Around Us by Procs
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Atmosphere by Harmonia & Eno '76
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Stamps by Lord Tang
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: The Grass (feat Wizard Apprentice) by Nathan Fake, Wizard Apprentice
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Orientalic by KoxBox
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: LATE PASS by Jel
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Riod by Juan Atkins, Moritz Von Oswald
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Meliorism by Out Of Place Artefacts, Vril, Rødhåd
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: In Your Mind (Reflections) by Hyperloop
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Game One by Infiniti
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Mouth by Ghost Culture
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Yesterday Faded - Edit by Daniel Avery
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Be Loved - Daniel Avery's 'Divided Love' Remix by Headman, Daniel Avery
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Drone Logic by Daniel Avery
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Vimana by Nathan Fake
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Tjejer - DJ Lily Dehydrated Mix by Emma Nydén, DJ Lily
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Fahrradgabel by Stimming
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Homicidal Diary by Air Liquide
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Orange by Ivy Lab, Two Fingers, Amon Tobin
+2025-03-15 16:29:52.301 | INFO     | __main__:_compare_playlists:164 - Removed: Mean Boyfriend by Modeselektor
+2025-03-15 16:29:52.302 | INFO     | __main__:_compare_playlists:166 - Summary: 24 track(s) added, 23 track(s) removed
+2025-03-15 16:29:52.306 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:29:52.306 | INFO     | __main__:main:201 - Playlist monitor started, checking for changes every 5 seconds
+2025-03-15 16:29:57.332 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:29:57.629 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:29:57.629 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:57.909 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:29:57.910 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:29:57.910 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:58.244 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:29:58.244 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:29:58.244 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:58.539 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:29:58.540 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:29:58.540 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:29:58.764 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:29:58.765 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:29:58.767 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:29:58.772 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:03.798 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:04.145 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:04.146 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:04.458 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:04.458 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:04.458 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:04.765 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:04.765 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:04.765 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:05.062 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:05.063 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:05.063 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:05.321 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:30:05.322 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:30:05.325 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:05.330 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:10.352 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:10.695 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:10.696 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:11.010 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:11.010 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:11.010 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:11.316 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:11.316 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:11.316 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:11.548 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:11.548 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:11.548 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:11.828 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:30:11.828 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:30:11.830 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:11.836 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:16.856 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:17.190 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:17.190 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:17.483 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:17.484 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:17.484 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:17.864 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:17.865 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:17.865 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:18.178 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:18.179 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:18.179 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:18.393 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:30:18.393 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:30:18.395 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:18.401 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:23.420 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:23.747 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:23.747 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:24.117 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:24.118 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:24.118 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:24.429 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:24.429 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:24.429 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:24.828 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:24.828 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:24.828 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:25.139 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:30:25.139 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:30:25.141 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:25.147 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:30.166 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:30.469 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:30.469 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:30.878 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:30.879 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:30.879 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:31.183 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:31.183 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:31.183 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:31.491 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:31.491 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:31.491 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:31.779 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:30:31.780 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:30:31.782 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:31.788 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:36.812 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:37.220 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:37.220 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:37.529 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:37.529 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:37.529 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:37.920 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:37.920 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:37.920 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:38.244 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:38.244 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:38.244 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:38.458 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:30:38.458 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:30:38.461 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:38.465 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:43.479 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:43.799 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:43.799 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:44.184 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:44.185 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:44.185 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:44.439 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:44.439 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:44.439 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:44.705 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:44.706 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:44.706 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:44.925 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:30:44.926 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:30:44.929 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:44.934 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:49.960 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:50.291 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:50.291 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:50.639 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:50.640 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:50.640 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:50.922 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:50.923 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:50.923 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:51.188 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:51.188 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:51.188 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:51.409 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:30:51.410 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:30:51.412 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:30:51.419 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:30:56.438 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:30:56.738 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:30:56.739 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:57.089 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:57.089 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:30:57.089 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:57.395 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:57.395 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:30:57.395 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:57.705 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:30:57.705 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:30:57.705 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:30:57.959 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:30:57.959 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:30:57.962 | INFO     | __main__:_compare_playlists:139 - Detected changes in playlist 'Namnge playlist' (ID: 4Go6LTKodDqQYkqOGC8ZiH)
+2025-03-15 16:30:57.963 | INFO     | __main__:_compare_playlists:166 - Summary: 0 track(s) added, 0 track(s) removed
+2025-03-15 16:30:57.969 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:31:02.994 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:31:03.440 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:31:03.441 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:03.696 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:03.697 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:31:03.697 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:04.002 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:04.002 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:31:04.002 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:04.281 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:04.282 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:31:04.282 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:04.515 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:31:04.515 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:31:04.518 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:31:04.523 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:31:09.546 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:31:09.888 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:31:09.889 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:10.192 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:10.192 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:31:10.192 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:10.499 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:10.500 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:31:10.500 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:10.915 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:10.915 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:31:10.915 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:11.186 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:31:11.186 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:31:11.189 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:31:11.195 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:31:16.221 | INFO     | __main__:check_for_changes:173 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:31:16.542 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:31:16.542 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:16.846 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:16.846 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:31:16.847 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:17.112 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:17.112 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:31:17.112 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:17.472 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:31:17.472 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:31:17.472 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:31:17.688 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:31:17.688 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:31:17.691 | INFO     | __main__:_compare_playlists:136 - No changes detected in playlist
+2025-03-15 16:31:17.696 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:32:21.210 | DEBUG    | __main__:_load_cache:71 - Loading cached playlist data from cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:32:21.211 | INFO     | __main__:check_for_changes:174 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:32:21.575 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:32:21.576 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:21.980 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:21.980 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:32:21.980 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:22.253 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:22.254 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:32:22.254 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:22.688 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:22.688 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:32:22.688 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:22.897 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:32:22.897 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:32:22.900 | INFO     | __main__:_compare_playlists:167 - Summary: 0 track(s) added, 0 track(s) removed
+2025-03-15 16:32:22.906 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:32:22.906 | INFO     | __main__:main:202 - Playlist monitor started, checking for changes every 5 seconds
+2025-03-15 16:32:27.932 | INFO     | __main__:check_for_changes:174 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:32:28.337 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:32:28.337 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:28.643 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:28.643 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:32:28.643 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:28.918 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:28.918 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:32:28.918 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:29.232 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:29.233 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:32:29.233 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:29.445 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:32:29.445 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:32:29.446 | INFO     | __main__:_compare_playlists:165 - Removed: Disco Mina by Paul Sabin
+2025-03-15 16:32:29.446 | INFO     | __main__:_compare_playlists:167 - Summary: 0 track(s) added, 1 track(s) removed
+2025-03-15 16:32:29.449 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:32:34.471 | INFO     | __main__:check_for_changes:174 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:32:34.731 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:32:34.732 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:35.082 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:35.083 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:32:35.083 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:35.391 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:35.391 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:32:35.391 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:35.639 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:35.640 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:32:35.640 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:35.877 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 73 additional tracks
+2025-03-15 16:32:35.877 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 473 total tracks from playlist
+2025-03-15 16:32:35.879 | INFO     | __main__:_compare_playlists:167 - Summary: 0 track(s) added, 0 track(s) removed
+2025-03-15 16:32:35.882 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:32:40.908 | INFO     | __main__:check_for_changes:174 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:32:41.216 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:32:41.216 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:41.536 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:41.536 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:32:41.536 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:41.821 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:41.821 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:32:41.821 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:42.249 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:42.249 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:32:42.249 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:42.457 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 74 additional tracks
+2025-03-15 16:32:42.458 | INFO     | __main__:_fetch_playlist_data:107 - Fetched 474 total tracks from playlist
+2025-03-15 16:32:42.461 | INFO     | __main__:_compare_playlists:161 - Added: Disco Mina by Paul Sabin (added by: barbatron)
+2025-03-15 16:32:42.461 | INFO     | __main__:_compare_playlists:167 - Summary: 1 track(s) added, 0 track(s) removed
+2025-03-15 16:32:42.467 | DEBUG    | __main__:_save_cache:85 - Saved playlist data to cache/playlist_4Go6LTKodDqQYkqOGC8ZiH.json
+2025-03-15 16:32:47.486 | INFO     | __main__:check_for_changes:174 - Checking playlist 4Go6LTKodDqQYkqOGC8ZiH for changes...
+2025-03-15 16:32:47.784 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 100 tracks (last=0dsVzW4ZhY63gBwrmWnbtx)
+2025-03-15 16:32:47.784 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:48.089 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:48.090 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 200 tracks (last=57cZYBx16pya1pR9cU9Px6)
+2025-03-15 16:32:48.090 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:48.374 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:48.375 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 300 tracks (last=0uInwuSZSDBbsGXqFLoYIN)
+2025-03-15 16:32:48.375 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}
+2025-03-15 16:32:48.625 | DEBUG    | __main__:_fetch_playlist_data:103 - Got 100 additional tracks
+2025-03-15 16:32:48.625 | DEBUG    | __main__:_fetch_playlist_data:98 - Got 400 tracks (last=0r2hQ68qEK1nt4EU8HlvAH)
+2025-03-15 16:32:48.625 | DEBUG    | __main__:_fetch_playlist_data:99 - fetching additional tracks page: {next_page}

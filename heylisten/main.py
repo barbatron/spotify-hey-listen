@@ -24,6 +24,7 @@ class PlaylistMonitor:
         self.client_secret = os.getenv("SPOT_CLIENT_SECRET")
         self.redirect_uri = os.getenv("SPOT_REDIRECT_URI")
         self.playlist_id = os.getenv("SPOT_PLAYLIST_ID")
+        self.market = os.getenv("SPOT_MARKET", "SE")
 
         # Check if required environment variables are set
         self._validate_env_vars()
@@ -86,14 +87,20 @@ class PlaylistMonitor:
     def _fetch_playlist_data(self) -> Dict[str, Any]:
         """Fetch playlist data from Spotify API."""
         try:
-            playlist = self.sp.playlist(self.playlist_id)
+            playlist = self.sp.playlist(self.playlist_id, market=self.market)
             tracks_items = playlist["tracks"]["items"]
 
             # Handle pagination to get all tracks
             next_page = playlist["tracks"]["next"]
             while next_page:
-                logger.debug(f"Fetching additional tracks page: {next_page}")
-                tracks_page = self.sp.next(playlist["tracks"])
+                tracks_len = len(tracks_items)
+                last_track_id = tracks_items[tracks_len - 1]["track"]["id"]
+                logger.debug(f"Got {tracks_len} tracks (last={last_track_id})")
+                logger.debug("fetching additional tracks page: {next_page}")
+                tracks_page = self.sp.playlist_items(
+                    playlist["id"], limit=100, offset=tracks_len, market=self.market
+                )
+                logger.debug(f"Got {len(tracks_page['items'])} additional tracks")
                 tracks_items.extend(tracks_page["items"])
                 next_page = tracks_page["next"]
 
@@ -125,11 +132,12 @@ class PlaylistMonitor:
 
     def _compare_playlists(self, old_data: Dict[str, Any], new_data: Dict[str, Any]):
         """Compare old and new playlist data and log changes."""
-        if old_data["snapshot_id"] == new_data["snapshot_id"]:
-            logger.info("No changes detected in playlist")
-            return
-
-        logger.info(f"Detected changes in playlist '{new_data['name']}' (ID: {new_data['id']})")
+        if old_data["snapshot_id"] != new_data["snapshot_id"]:
+            logger.info(
+                f"Detected changes in playlist '{new_data['name']}' (ID: {new_data['id']})",
+                old_data["snapshot_id"],
+                new_data["snapshot_id"],
+            )
 
         # Create track ID maps for easier comparison
         old_tracks = {track["id"]: track for track in old_data["tracks"]}
