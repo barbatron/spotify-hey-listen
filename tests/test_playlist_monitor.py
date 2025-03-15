@@ -12,7 +12,6 @@ class TestPlaylistMonitor(unittest.TestCase):
         # Mock Spotify credentials
         self.client_id = "test_client_id"
         self.client_secret = "test_client_secret"
-        self.redirect_uri = "http://localhost:8888/callback"
         self.playlist_id = "test_playlist_id"
         self.market = "SE"
 
@@ -26,14 +25,14 @@ class TestPlaylistMonitor(unittest.TestCase):
         self.mock_sp_instance = MagicMock()
         self.mock_spotify.return_value = self.mock_sp_instance
 
-        # Mock OAuth manager
-        self.oauth_patcher = patch("heylisten.main.SpotifyOAuth")
-        self.mock_oauth = self.oauth_patcher.start()
+        # Mock Client Credentials manager
+        self.client_credentials_patcher = patch("heylisten.main.SpotifyClientCredentials")
+        self.mock_client_credentials = self.client_credentials_patcher.start()
 
     def tearDown(self):
         # Clean up patches
         self.spotify_patcher.stop()
-        self.oauth_patcher.stop()
+        self.client_credentials_patcher.stop()
         # Clean up temp directory
         self.temp_dir.cleanup()
 
@@ -42,7 +41,6 @@ class TestPlaylistMonitor(unittest.TestCase):
         monitor = PlaylistMonitor(
             client_id=self.client_id,
             client_secret=self.client_secret,
-            redirect_uri=self.redirect_uri,
             playlist_id=self.playlist_id,
             market=self.market,
             cache_dir=self.cache_dir,
@@ -50,7 +48,6 @@ class TestPlaylistMonitor(unittest.TestCase):
 
         self.assertEqual(monitor.client_id, self.client_id)
         self.assertEqual(monitor.client_secret, self.client_secret)
-        self.assertEqual(monitor.redirect_uri, self.redirect_uri)
         self.assertEqual(monitor.playlist_id, self.playlist_id)
         self.assertEqual(monitor.market, self.market)
         self.assertEqual(monitor.cache_dir, self.cache_dir)
@@ -62,7 +59,6 @@ class TestPlaylistMonitor(unittest.TestCase):
             PlaylistMonitor(
                 client_id="",
                 client_secret=self.client_secret,
-                redirect_uri=self.redirect_uri,
                 playlist_id=self.playlist_id,
                 cache_dir=self.cache_dir,
             )
@@ -72,7 +68,6 @@ class TestPlaylistMonitor(unittest.TestCase):
         monitor = PlaylistMonitor(
             client_id=self.client_id,
             client_secret=self.client_secret,
-            redirect_uri=self.redirect_uri,
             playlist_id=self.playlist_id,
             cache_dir=self.cache_dir,
         )
@@ -105,7 +100,6 @@ class TestPlaylistMonitor(unittest.TestCase):
         monitor = PlaylistMonitor(
             client_id=self.client_id,
             client_secret=self.client_secret,
-            redirect_uri=self.redirect_uri,
             playlist_id=self.playlist_id,
             cache_dir=self.cache_dir,
         )
@@ -119,7 +113,6 @@ class TestPlaylistMonitor(unittest.TestCase):
         monitor = PlaylistMonitor(
             client_id=self.client_id,
             client_secret=self.client_secret,
-            redirect_uri=self.redirect_uri,
             playlist_id=self.playlist_id,
             cache_dir=self.cache_dir,
         )
@@ -203,7 +196,6 @@ class TestPlaylistMonitor(unittest.TestCase):
         monitor = PlaylistMonitor(
             client_id=self.client_id,
             client_secret=self.client_secret,
-            redirect_uri=self.redirect_uri,
             playlist_id=self.playlist_id,
             cache_dir=self.cache_dir,
         )
