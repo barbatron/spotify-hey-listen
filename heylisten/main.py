@@ -1,15 +1,14 @@
+import json
 import os
 import time
-from datetime import datetime
 from pathlib import Path
-import json
-import schedule
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
+import schedule
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
 from dotenv import load_dotenv
 from loguru import logger
+from spotipy.oauth2 import SpotifyOAuth
 
 # Load environment variables
 load_dotenv()
