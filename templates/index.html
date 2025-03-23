@@ -67,6 +67,57 @@
       a:hover {
         text-decoration: underline;
       }
+      .button {
+        display: inline-block;
+        background-color: #1db954;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 10px;
+      }
+      .button:hover {
+        background-color: #1ed760;
+        text-decoration: none;
+      }
+      .playlist-item {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .playlist-item:last-child {
+        border-bottom: none;
+      }
+      .playlist-name {
+        font-weight: bold;
+      }
+      .playlist-meta {
+        font-size: 14px;
+        color: #666;
+      }
+      .playlist-actions {
+        margin-left: 10px;
+      }
+      .select-btn {
+        background-color: #1db954;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 12px;
+      }
+      .playlist-list {
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        border-top: 1px solid #eee;
+      }
     </style>
   </head>
   <body>
@@ -96,6 +147,31 @@
         The server is actively monitoring this playlist for any changes. When
         tracks are added or removed, they will be logged automatically.
       </p>
+
+      <div style="text-align: center">
+        <a href="/login" class="button">Load My Playlists</a>
+      </div>
+
+      {% if playlists %}
+      <div class="playlist-list">
+        <h3>Your Playlists</h3>
+        {% for playlist in playlists %}
+        <div class="playlist-item">
+          <div>
+            <div class="playlist-name">{{ playlist.name }}</div>
+            <div class="playlist-meta">
+              {{ playlist.track_count }} tracks {% if playlist.collaborative
+              %}(Collaborative){% endif %} • Owner: {{ playlist.owner }}
+            </div>
+          </div>
+          <div class="playlist-actions">
+            <a href="/select-playlist/{{ playlist.id }}" class="select-btn"
+            >Monitor</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
 
     <div class="footer">

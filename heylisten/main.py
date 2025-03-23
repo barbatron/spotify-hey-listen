@@ -213,7 +213,7 @@ def main():
     # Get environment variables
     client_id = os.getenv("SPOT_CLIENT_ID")
     client_secret = os.getenv("SPOT_CLIENT_SECRET")
-    # redirect_uri = os.getenv("SPOT_CLIENT_REDIRECT_URI")
+    redirect_uri = os.getenv("SPOT_REDIRECT_URI", "http://localhost:8000/callback")
     playlist_id = os.getenv("SPOT_PLAYLIST_ID")
     market = os.getenv("SPOT_MARKET", "SE")
     web_port = int(os.getenv("WEB_PORT", "8000"))
@@ -243,14 +243,14 @@ def main():
 
     # Create web server thread
     from heylisten.web import set_playlist_monitor, start_web_server
-    
+
     # Register the monitor with the web server
     set_playlist_monitor(monitor)
-    
+
     # Start monitor in a separate thread
     monitor_thread = threading.Thread(target=start_monitor, args=(monitor,), daemon=True)
     monitor_thread.start()
-    
+
     # Start web server in the main thread
     logger.info(f"Starting web server on {web_host}:{web_port}")
     start_web_server(host=web_host, port=web_port)
