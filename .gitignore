@@ -187,3 +187,4 @@ cython_debug/
 .cache
 **/*.log
 monitored_playlists.json
+.spotify_auth_cache

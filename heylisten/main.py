@@ -4,13 +4,15 @@ import sys  # Add missing import for sys
 import threading
 import time
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import schedule
 import spotipy
 from dotenv import load_dotenv
 from loguru import logger
 from spotipy.oauth2 import SpotifyClientCredentials
+
+from heylisten.notifications import NotificationManager
 
 # Load environment variables
 load_dotenv()
@@ -24,7 +26,6 @@ class PlaylistMonitor:
         self,
         client_id: str,
         client_secret: str,
-        playlist_id: str = None,
         market: str = "SE",
         cache_dir: Path = Path("cache"),
         db_path: str = "monitored_playlists.json",
@@ -32,8 +33,11 @@ class PlaylistMonitor:
         # Spotify API credentials
         self.client_id = client_id
         self.client_secret = client_secret
-        self.playlist_id = playlist_id  # Keep for backward compatibility
         self.market = market
+        self.playlist_id = None  # Initialize playlist_id to None
+
+        # Initialize notification manager
+        self.notification_manager = NotificationManager()
 
         # Check if required parameters are valid
         self._validate_params()
@@ -70,27 +74,12 @@ class PlaylistMonitor:
                 except Exception as e:
                     logger.error(f"Error loading cache for playlist {playlist_id}: {e}")
 
-        # For backward compatibility - load the single playlist if specified
-        if self.playlist_id:
-            self.cache_file = self.cache_dir / f"playlist_{self.playlist_id}.json"
-            self.cached_playlist = self._load_cache()
-
-            # Add to database if not already there
-            if self.playlist_id and self.cached_playlist:
-                simple_data = {
-                    "id": self.playlist_id,
-                    "name": self.cached_playlist.get("name", "Unknown Playlist"),
-                    "track_count": len(self.cached_playlist.get("tracks", [])),
-                }
-                self.db.add_playlist(simple_data)
-
     def _validate_params(self):
         """Validate that all required parameters are set."""
         missing_params = []
         for param_name, param_value in [
             ("client_id", self.client_id),
             ("client_secret", self.client_secret),
-            ("playlist_id", self.playlist_id),
         ]:
             if not param_value:
                 missing_params.append(param_name)
@@ -173,13 +162,14 @@ class PlaylistMonitor:
             logger.error(f"Failed to fetch playlist data for {playlist_id}: {e}")
             raise
 
-    def _compare_playlists(self, old_data: Dict[str, Any], new_data: Dict[str, Any]):
+    def _compare_playlists(
+        self, old_data: Dict[str, Any], new_data: Dict[str, Any], user_id: str = None
+    ) -> Dict[str, Any]:
         """Compare old and new playlist data and log changes."""
         if old_data["snapshot_id"] != new_data["snapshot_id"]:
+            user_info = f" (monitored by user: {user_id})" if user_id else ""
             logger.info(
-                f"Detected changes in playlist '{new_data['name']}' (ID: {new_data['id']})",
-                old_data["snapshot_id"],
-                new_data["snapshot_id"],
+                f"Detected changes in playlist '{new_data['name']}' (ID: {new_data['id']}){user_info}"
             )
 
         # Create track ID maps for easier comparison
@@ -211,6 +201,15 @@ class PlaylistMonitor:
             f"Summary: {len(added_tracks)} track(s) added, {len(removed_tracks)} track(s) removed"
         )
 
+        # Return changes for notifications
+        return {
+            "playlist_name": new_data["name"],
+            "playlist_id": new_data["id"],
+            "user_id": user_id,
+            "added_tracks": added_tracks,
+            "removed_tracks": removed_tracks,
+        }
+
     def check_for_changes(self):
         """Fetch current playlists and check for changes in all monitored playlists."""
         try:
@@ -223,21 +222,28 @@ class PlaylistMonitor:
 
             logger.info(f"Checking {len(monitored_playlists)} playlists for changes...")
 
+            changes_list = []  # Collect all changes for notifications
+
             for playlist_info in monitored_playlists:
                 playlist_id = playlist_info["id"]
-                logger.info(f"Checking playlist {playlist_id} for changes...")
+                playlist_name = playlist_info["name"]
+                user_id = playlist_info.get("user_id")
+                user_tag = f" (monitored by: {user_id})" if user_id else ""
+                logger.info(f"Checking playlist {playlist_id} \"{playlist_name}\" for changes{user_tag}...")
 
                 try:
                     current_playlist = self._fetch_playlist_data(playlist_id)
 
                     if playlist_id in self.cached_playlists:
-                        self._compare_playlists(
-                            self.cached_playlists[playlist_id], current_playlist
+                        changes = self._compare_playlists(
+                            self.cached_playlists[playlist_id], current_playlist, user_id
                         )
+                        if changes["added_tracks"] or changes["removed_tracks"]:
+                            changes_list.append(changes)
                     else:
                         logger.info(
                             f"Initial load of playlist '{current_playlist['name']}'"
-                            + f" with {len(current_playlist['tracks'])} tracks"
+                            + f" with {len(current_playlist['tracks'])} tracks{user_tag}"
                         )
 
                     # Update cache
@@ -254,13 +260,17 @@ class PlaylistMonitor:
                 except Exception as e:
                     logger.error(f"Error checking playlist {playlist_id}: {e}")
 
-            # For backward compatibility
-            if self.playlist_id:
-                if self.playlist_id in self.cached_playlists:
-                    self.cached_playlist = self.cached_playlists[self.playlist_id]
+            # Send notifications for changes
+            if changes_list:
+                self._notify_users_of_changes(changes_list)
 
         except Exception as e:
             logger.error(f"Error during playlist check: {e}")
+
+    def _notify_users_of_changes(self, changes_list: List[Dict[str, Any]]):
+        """Notify users about changes to their monitored playlists."""
+        logger.info(f"Processing notifications for {len(changes_list)} changed playlists")
+        self.notification_manager.notify_users_of_changes(changes_list)
 
 
 def start_monitor(monitor):
@@ -319,7 +329,6 @@ def main():
     monitor = PlaylistMonitor(
         client_id=client_id,
         client_secret=client_secret,
-        playlist_id=playlist_id,  # Keep for backward compatibility
         market=market,
     )
 

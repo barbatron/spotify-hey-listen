@@ -46,14 +46,21 @@ class PlaylistDatabase:
         playlists = self.get_playlists()
         return [playlist["id"] for playlist in playlists]
 
-    def add_playlist(self, playlist: Dict[str, Any]) -> bool:
+    def add_playlist(self, playlist: Dict[str, Any], user_id: str = None) -> bool:
         """Add a playlist to the monitored list if not already present."""
         playlists = self.get_playlists()
 
         # Check if playlist already exists
         for existing in playlists:
             if existing["id"] == playlist["id"]:
+                # Update user_id if provided and not already set
+                if user_id and not existing.get("user_id"):
+                    existing["user_id"] = user_id
                 return True  # Already exists
+
+        # Add user_id to the playlist data if provided
+        if user_id:
+            playlist["user_id"] = user_id
 
         playlists.append(playlist)
         return self.save_playlists(playlists)
@@ -65,9 +72,28 @@ class PlaylistDatabase:
         return self.save_playlists(playlists)
 
     def update_monitored_playlists(
-        self, playlist_ids: List[str], all_playlists: List[Dict[str, Any]]
+        self, playlist_ids: List[str], all_playlists: List[Dict[str, Any]], user_id: str = None
     ) -> bool:
         """Update the list of monitored playlists based on selected IDs."""
+        # Get current playlists to preserve user associations
+        current_playlists = self.get_playlists()
+        current_by_id = {p["id"]: p for p in current_playlists}
+
         # Filter the complete playlist data for only the selected ones
-        monitored = [p for p in all_playlists if p["id"] in playlist_ids]
+        monitored = []
+        for p in all_playlists:
+            if p["id"] in playlist_ids:
+                # If we already have this playlist, preserve its user_id
+                if p["id"] in current_by_id and "user_id" in current_by_id[p["id"]]:
+                    p["user_id"] = current_by_id[p["id"]]["user_id"]
+                # Otherwise set the new user_id if provided
+                elif user_id:
+                    p["user_id"] = user_id
+                monitored.append(p)
+
         return self.save_playlists(monitored)
+
+    def get_user_playlists(self, user_id: str) -> List[Dict[str, Any]]:
+        """Get all playlists monitored by a specific user."""
+        playlists = self.get_playlists()
+        return [p for p in playlists if p.get("user_id") == user_id]

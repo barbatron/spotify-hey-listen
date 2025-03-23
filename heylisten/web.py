@@ -147,7 +147,7 @@ async def load_playlists():
         for playlist in playlists:
             if (
                 playlist.get("collaborative")
-                or playlist.get("owner", {}).get("id") != user_data["id"]
+                # or playlist.get("owner", {}).get("id") != user_data["id"]
             ):
                 logger.debug(f"Adding playlist: {playlist['name']}")
                 collab_playlists.append(
@@ -193,11 +193,19 @@ async def update_monitored_playlists(request: Request):
                     playlist_id = key.split("_")[1]
                     selected_ids.append(playlist_id)
 
-        logger.info(f"Updating monitored playlists: {selected_ids}")
+        # Get user_id from session or Spotify
+        auth_manager = get_auth_manager()
+        user_id = None
+        if auth_manager.get_cached_token():
+            sp = spotipy.Spotify(auth_manager=auth_manager)
+            user_data = sp.current_user()
+            user_id = user_data["id"]
+
+        logger.info(f"Updating monitored playlists for user {user_id}: {selected_ids}")
 
         # Update the database with selected playlists
         all_playlists = user_playlists.get("current", [])
-        playlist_monitor.db.update_monitored_playlists(selected_ids, all_playlists)
+        playlist_monitor.db.update_monitored_playlists(selected_ids, all_playlists, user_id)
 
         # Perform an immediate check
         playlist_monitor.check_for_changes()
@@ -225,16 +233,21 @@ async def select_playlist(playlist_id: str):
         if not playlist_data:
             raise HTTPException(status_code=404, detail="Playlist not found")
 
-        # Add to database
-        playlist_monitor.db.add_playlist(playlist_data)
+        # Get user_id from session or Spotify
+        auth_manager = get_auth_manager()
+        user_id = None
+        if auth_manager.get_cached_token():
+            sp = spotipy.Spotify(auth_manager=auth_manager)
+            user_data = sp.current_user()
+            user_id = user_data["id"]
 
-        # For backward compatibility
-        playlist_monitor.playlist_id = playlist_id
+        # Add to database with user_id
+        playlist_monitor.db.add_playlist(playlist_data, user_id)
 
         # Perform an immediate check
         playlist_monitor.check_for_changes()
 
-        logger.info(f"Now monitoring playlist: {playlist_id}")
+        logger.info(f"Now monitoring playlist: {playlist_id} for user: {user_id}")
         return RedirectResponse(url="/")
     except Exception as e:
         logger.error(f"Error selecting playlist: {e}")
