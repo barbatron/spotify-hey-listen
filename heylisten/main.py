@@ -1,5 +1,6 @@
 import json
 import os
+import sys  # Add missing import for sys
 import threading
 import time
 from pathlib import Path
@@ -23,14 +24,15 @@ class PlaylistMonitor:
         self,
         client_id: str,
         client_secret: str,
-        playlist_id: str,
+        playlist_id: str = None,
         market: str = "SE",
         cache_dir: Path = Path("cache"),
+        db_path: str = "monitored_playlists.json",
     ):
         # Spotify API credentials
         self.client_id = client_id
         self.client_secret = client_secret
-        self.playlist_id = playlist_id
+        self.playlist_id = playlist_id  # Keep for backward compatibility
         self.market = market
 
         # Check if required parameters are valid
@@ -47,10 +49,40 @@ class PlaylistMonitor:
         # Initialize cache directory
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(exist_ok=True)
-        self.cache_file = self.cache_dir / f"playlist_{self.playlist_id}.json"
 
-        # Load cached playlist data if available
-        self.cached_playlist = self._load_cache()
+        # Initialize playlist database
+        from heylisten.db import PlaylistDatabase
+
+        self.db = PlaylistDatabase(db_path)
+
+        # Cached playlist data - now a dictionary with playlist IDs as keys
+        self.cached_playlists = {}
+
+        # Load cached playlist data for all monitored playlists
+        for playlist in self.db.get_playlists():
+            playlist_id = playlist["id"]
+            cache_file = self.cache_dir / f"playlist_{playlist_id}.json"
+            if cache_file.exists():
+                try:
+                    with open(cache_file, "r") as f:
+                        self.cached_playlists[playlist_id] = json.load(f)
+                        logger.debug(f"Loaded cached data for playlist {playlist_id}")
+                except Exception as e:
+                    logger.error(f"Error loading cache for playlist {playlist_id}: {e}")
+
+        # For backward compatibility - load the single playlist if specified
+        if self.playlist_id:
+            self.cache_file = self.cache_dir / f"playlist_{self.playlist_id}.json"
+            self.cached_playlist = self._load_cache()
+
+            # Add to database if not already there
+            if self.playlist_id and self.cached_playlist:
+                simple_data = {
+                    "id": self.playlist_id,
+                    "name": self.cached_playlist.get("name", "Unknown Playlist"),
+                    "track_count": len(self.cached_playlist.get("tracks", [])),
+                }
+                self.db.add_playlist(simple_data)
 
     def _validate_params(self):
         """Validate that all required parameters are set."""
@@ -82,23 +114,32 @@ class PlaylistMonitor:
 
     def _save_cache(self, playlist_data: Dict[str, Any]):
         """Save playlist data to cache."""
-        with open(self.cache_file, "w") as f:
-            json.dump(playlist_data, f)
-        logger.debug(f"Saved playlist data to {self.cache_file}")
-
-    def _fetch_playlist_data(self) -> Dict[str, Any]:
-        """Fetch playlist data from Spotify API."""
+        playlist_id = playlist_data["id"]
+        cache_file = self.cache_dir / f"playlist_{playlist_id}.json"
         try:
-            playlist = self.sp.playlist(self.playlist_id, market=self.market)
+            with open(cache_file, "w") as f:
+                json.dump(playlist_data, f)
+            logger.debug(f"Saved playlist data to {cache_file}")
+        except Exception as e:
+            logger.error(f"Failed to save playlist data to cache: {e}")
+
+    def _fetch_playlist_data(self, playlist_id: str) -> Dict[str, Any]:
+        """Fetch playlist data from Spotify API for the given playlist ID."""
+        try:
+            playlist = self.sp.playlist(playlist_id, market=self.market)
             tracks_items = playlist["tracks"]["items"]
 
             # Handle pagination to get all tracks
             next_page = playlist["tracks"]["next"]
             while next_page:
                 tracks_len = len(tracks_items)
-                last_track_id = tracks_items[tracks_len - 1]["track"]["id"]
+                last_track_id = (
+                    tracks_items[tracks_len - 1]["track"]["id"]
+                    if tracks_items[tracks_len - 1]["track"]
+                    else "unknown"
+                )
                 logger.debug(f"Got {tracks_len} tracks (last={last_track_id})")
-                logger.debug("fetching additional tracks page: {next_page}")
+                logger.debug(f"Fetching additional tracks page: {next_page}")
                 tracks_page = self.sp.playlist_items(
                     playlist["id"], limit=100, offset=tracks_len, market=self.market
                 )
@@ -106,7 +147,7 @@ class PlaylistMonitor:
                 tracks_items.extend(tracks_page["items"])
                 next_page = tracks_page["next"]
 
-            logger.info(f"Fetched {len(tracks_items)} total tracks from playlist")
+            logger.info(f"Fetched {len(tracks_items)} total tracks from playlist {playlist_id}")
 
             # Extract relevant information (optimization to reduce cache size)
             return {
@@ -129,7 +170,7 @@ class PlaylistMonitor:
                 ],
             }
         except Exception as e:
-            logger.error(f"Failed to fetch playlist data: {e}")
+            logger.error(f"Failed to fetch playlist data for {playlist_id}: {e}")
             raise
 
     def _compare_playlists(self, old_data: Dict[str, Any], new_data: Dict[str, Any]):
@@ -171,22 +212,53 @@ class PlaylistMonitor:
         )
 
     def check_for_changes(self):
-        """Fetch current playlist and check for changes."""
+        """Fetch current playlists and check for changes in all monitored playlists."""
         try:
-            logger.info(f"Checking playlist {self.playlist_id} for changes...")
-            current_playlist = self._fetch_playlist_data()
+            # Get all monitored playlists from database
+            monitored_playlists = self.db.get_playlists()
 
-            if self.cached_playlist:
-                self._compare_playlists(self.cached_playlist, current_playlist)
-            else:
-                logger.info(
-                    f"Initial load of playlist '{current_playlist['name']}'"
-                    + " with {len(current_playlist['tracks'])} tracks"
-                )
+            if not monitored_playlists:
+                logger.info("No playlists are currently being monitored")
+                return
 
-            # Update cache
-            self._save_cache(current_playlist)
-            self.cached_playlist = current_playlist
+            logger.info(f"Checking {len(monitored_playlists)} playlists for changes...")
+
+            for playlist_info in monitored_playlists:
+                playlist_id = playlist_info["id"]
+                logger.info(f"Checking playlist {playlist_id} for changes...")
+
+                try:
+                    current_playlist = self._fetch_playlist_data(playlist_id)
+
+                    if playlist_id in self.cached_playlists:
+                        self._compare_playlists(
+                            self.cached_playlists[playlist_id], current_playlist
+                        )
+                    else:
+                        logger.info(
+                            f"Initial load of playlist '{current_playlist['name']}'"
+                            + f" with {len(current_playlist['tracks'])} tracks"
+                        )
+
+                    # Update cache
+                    self._save_cache(current_playlist)
+                    self.cached_playlists[playlist_id] = current_playlist
+
+                    # Update playlist info in the database
+                    for p in monitored_playlists:
+                        if p["id"] == playlist_id:
+                            p["name"] = current_playlist["name"]
+                            p["track_count"] = len(current_playlist["tracks"])
+                    self.db.save_playlists(monitored_playlists)
+
+                except Exception as e:
+                    logger.error(f"Error checking playlist {playlist_id}: {e}")
+
+            # For backward compatibility
+            if self.playlist_id:
+                if self.playlist_id in self.cached_playlists:
+                    self.cached_playlist = self.cached_playlists[self.playlist_id]
+
         except Exception as e:
             logger.error(f"Error during playlist check: {e}")
 
@@ -208,13 +280,24 @@ def start_monitor(monitor):
         time.sleep(1)
 
 
+def periodic_check(monitor, stop_event, interval_seconds):
+    """Run periodic playlist checks at the specified interval."""
+    while not stop_event.is_set():
+        monitor.check_for_changes()
+        # Sleep for the interval, but check for stop event periodically
+        for _ in range(interval_seconds):
+            if stop_event.is_set():
+                break
+            time.sleep(1)
+
+
 def main():
     """Main function to run the playlist monitor and web server."""
     # Get environment variables
     client_id = os.getenv("SPOT_CLIENT_ID")
     client_secret = os.getenv("SPOT_CLIENT_SECRET")
     redirect_uri = os.getenv("SPOT_REDIRECT_URI", "http://localhost:8000/callback")
-    playlist_id = os.getenv("SPOT_PLAYLIST_ID")
+    playlist_id = os.getenv("SPOT_PLAYLIST_ID")  # Keep for backward compatibility
     market = os.getenv("SPOT_MARKET", "SE")
     web_port = int(os.getenv("WEB_PORT", "8000"))
     web_host = os.getenv("WEB_HOST", "0.0.0.0")
@@ -224,36 +307,47 @@ def main():
     for var_name, var_value in [
         ("SPOT_CLIENT_ID", client_id),
         ("SPOT_CLIENT_SECRET", client_secret),
-        ("SPOT_PLAYLIST_ID", playlist_id),
     ]:
         if not var_value:
             missing_vars.append(var_name)
 
     if missing_vars:
         logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
-        raise EnvironmentError(f"Missing required environment variables: {', '.join(missing_vars)}")
+        sys.exit(1)
 
-    # Initialize playlist monitor
+    # Create and start the playlist monitor
     monitor = PlaylistMonitor(
         client_id=client_id,
         client_secret=client_secret,
-        playlist_id=playlist_id,
+        playlist_id=playlist_id,  # Keep for backward compatibility
         market=market,
     )
 
-    # Create web server thread
+    # Set up the web server
     from heylisten.web import set_playlist_monitor, start_web_server
 
     # Register the monitor with the web server
     set_playlist_monitor(monitor)
 
-    # Start monitor in a separate thread
-    monitor_thread = threading.Thread(target=start_monitor, args=(monitor,), daemon=True)
-    monitor_thread.start()
+    # Check for changes immediately
+    monitor.check_for_changes()
 
-    # Start web server in the main thread
-    logger.info(f"Starting web server on {web_host}:{web_port}")
-    start_web_server(host=web_host, port=web_port)
+    # Start the periodic check thread
+    stop_event = threading.Event()
+    check_thread = threading.Thread(target=periodic_check, args=(monitor, stop_event, 300))
+    check_thread.daemon = True
+    check_thread.start()
+
+    try:
+        # Start the web server (this will block until the server is stopped)
+        start_web_server(host=web_host, port=web_port)
+    except KeyboardInterrupt:
+        logger.info("Keyboard interrupt received, shutting down...")
+    finally:
+        # Stop the check thread
+        stop_event.set()
+        check_thread.join(timeout=1)
+        logger.info("Playlist monitor stopped")
 
 
 if __name__ == "__main__":

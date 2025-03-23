@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, List, Dict, Any
 from urllib.parse import urlencode
 
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException, Depends, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -49,24 +49,39 @@ def get_auth_manager():
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     """Render the main page."""
-    playlist_name = "Not loaded yet"
-    track_count = 0
+    stats = []
 
-    if playlist_monitor and playlist_monitor.cached_playlist:
-        playlist_name = playlist_monitor.cached_playlist.get("name", "Unknown Playlist")
-        track_count = len(playlist_monitor.cached_playlist.get("tracks", []))
+    # Get all monitored playlists
+    monitored_playlists = []
+    if playlist_monitor:
+        monitored_playlists = playlist_monitor.db.get_playlists()
+        for playlist in monitored_playlists:
+            playlist_id = playlist["id"]
+            if playlist_id in playlist_monitor.cached_playlists:
+                cached_data = playlist_monitor.cached_playlists[playlist_id]
+                stats.append(
+                    {
+                        "id": playlist_id,
+                        "name": cached_data.get("name", "Unknown Playlist"),
+                        "track_count": len(cached_data.get("tracks", [])),
+                    }
+                )
 
     # Get user playlists if available
-    playlists = user_playlists.get("current", [])
+    available_playlists = user_playlists.get("current", [])
+
+    # Mark which playlists are being monitored
+    monitored_ids = [p["id"] for p in monitored_playlists]
+    for playlist in available_playlists:
+        playlist["monitored"] = playlist["id"] in monitored_ids
 
     return templates.TemplateResponse(
         "index.html",
         {
             "request": request,
-            "playlist_name": playlist_name,
-            "track_count": track_count,
-            "playlist_id": os.getenv("SPOT_PLAYLIST_ID", "No playlist ID set"),
-            "playlists": playlists,
+            "stats": stats,
+            "monitored_count": len(monitored_playlists),
+            "playlists": available_playlists,
         },
     )
 
@@ -110,21 +125,21 @@ async def load_playlists():
         if not auth_manager.get_cached_token():
             # Not authenticated, redirect to login
             return RedirectResponse(url="/login")
-        
+
         # Create Spotify client with the cached token
         sp = spotipy.Spotify(auth_manager=auth_manager)
         user_data = sp.current_user()
-        
+
         # Fetch user playlists with pagination
         playlists = []
         results = sp.current_user_playlists(limit=50)
-        playlists.extend(results['items'])
-        
+        playlists.extend(results["items"])
+
         # Handle pagination to get all playlists
-        while results['next']:
+        while results["next"]:
             results = sp.next(results)
-            playlists.extend(results['items'])
-        
+            playlists.extend(results["items"])
+
         logger.info(f"Fetched a total of {len(playlists)} playlists for user {user_data['id']}")
 
         # Filter for collaborative playlists and owned playlists
@@ -148,7 +163,9 @@ async def load_playlists():
         # Store playlists in memory
         user_playlists["current"] = collab_playlists
 
-        logger.info(f"Loaded {len(collab_playlists)} collaborative/owned playlists for user {user_data['id']}")
+        logger.info(
+            f"Loaded {len(collab_playlists)} collaborative/owned playlists for user {user_data['id']}"
+        )
 
         # Redirect back to main page
         return RedirectResponse(url="/")
@@ -157,17 +174,61 @@ async def load_playlists():
         return {"error": str(e)}
 
 
-@app.get("/select-playlist/{playlist_id}")
-async def select_playlist(playlist_id: str):
-    """Update the monitored playlist."""
+@app.post("/update-monitored-playlists")
+async def update_monitored_playlists(request: Request):
+    """Update which playlists should be monitored."""
     if not playlist_monitor:
         raise HTTPException(status_code=500, detail="Playlist monitor not initialized")
 
     try:
-        # Update environment variable (for persistence after restart)
-        os.environ["SPOT_PLAYLIST_ID"] = playlist_id
+        form_data = await request.form()
+        selected_ids = form_data.getlist("playlist_ids")
 
-        # Set the new playlist in the monitor
+        if not selected_ids:
+            # Form data might be structured differently
+            selected_ids = []
+            for key, value in form_data.items():
+                if key.startswith("playlist_") and value == "on":
+                    # Extract playlist ID from the checkbox name (playlist_XXXX)
+                    playlist_id = key.split("_")[1]
+                    selected_ids.append(playlist_id)
+
+        logger.info(f"Updating monitored playlists: {selected_ids}")
+
+        # Update the database with selected playlists
+        all_playlists = user_playlists.get("current", [])
+        playlist_monitor.db.update_monitored_playlists(selected_ids, all_playlists)
+
+        # Perform an immediate check
+        playlist_monitor.check_for_changes()
+
+        return RedirectResponse(url="/", status_code=303)  # POST-redirect-GET pattern
+    except Exception as e:
+        logger.error(f"Error updating monitored playlists: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/select-playlist/{playlist_id}")
+async def select_playlist(playlist_id: str):
+    """Update the monitored playlist (legacy endpoint)."""
+    if not playlist_monitor:
+        raise HTTPException(status_code=500, detail="Playlist monitor not initialized")
+
+    try:
+        # Find the playlist in the available playlists
+        playlist_data = None
+        for playlist in user_playlists.get("current", []):
+            if playlist["id"] == playlist_id:
+                playlist_data = playlist
+                break
+
+        if not playlist_data:
+            raise HTTPException(status_code=404, detail="Playlist not found")
+
+        # Add to database
+        playlist_monitor.db.add_playlist(playlist_data)
+
+        # For backward compatibility
         playlist_monitor.playlist_id = playlist_id
 
         # Perform an immediate check

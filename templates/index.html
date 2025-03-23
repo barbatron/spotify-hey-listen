@@ -118,6 +118,39 @@
         overflow-y: auto;
         border-top: 1px solid #eee;
       }
+      .checkbox-container {
+        margin-right: 10px;
+      }
+      .update-btn {
+        background-color: #1db954;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 15px;
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 15px auto;
+      }
+      .update-btn:hover {
+        background-color: #1ed760;
+      }
+      .monitored-playlists {
+        margin-top: 20px;
+      }
+      .monitored-badge {
+        background-color: #1db954;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 12px;
+        margin-left: 5px;
+      }
     </style>
   </head>
   <body>
@@ -127,50 +160,75 @@
     </div>
 
     <div class="container">
-      <h2>Playlist Status</h2>
+      <h2>Monitored Playlists</h2>
+
+      {% if stats %}
       <div class="stats">
+        {% for playlist in stats %}
         <div class="stat-item">
-          <div class="stat-value">{{ playlist_name }}</div>
-          <div class="stat-label">Playlist Name</div>
+          <div class="stat-value">{{ playlist.name }}</div>
+          <div class="stat-label">{{ playlist.track_count }} tracks</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-value">{{ track_count }}</div>
-          <div class="stat-label">Tracks</div>
-        </div>
+        {% endfor %}
       </div>
 
       <p>
-        Monitoring Spotify playlist ID: <code>{{ playlist_id }}</code>
+        Currently monitoring {{ monitored_count }} playlist{% if monitored_count
+        != 1 %}s{% endif %}.
       </p>
-
+      {% else %}
       <p>
-        The server is actively monitoring this playlist for any changes. When
-        tracks are added or removed, they will be logged automatically.
+        No playlists are currently being monitored. Select playlists below to
+        start monitoring.
       </p>
+      {% endif %}
 
       <div style="text-align: center">
         <a href="/login" class="button">Load My Playlists</a>
       </div>
 
       {% if playlists %}
-      <div class="playlist-list">
-        <h3>Your Playlists</h3>
-        {% for playlist in playlists %}
-        <div class="playlist-item">
-          <div>
-            <div class="playlist-name">{{ playlist.name }}</div>
-            <div class="playlist-meta">
-              {{ playlist.track_count }} tracks {% if playlist.collaborative
-              %}(Collaborative){% endif %} • Owner: {{ playlist.owner }}
+      <form action="/update-monitored-playlists" method="post">
+        <div class="playlist-list">
+          <h3>Your Playlists</h3>
+          <p>Select the playlists you want to monitor:</p>
+
+          {% for playlist in playlists %}
+          <div class="playlist-item">
+            <div>
+              <div class="checkbox-container">
+                <input
+                  type="checkbox"
+                  id="playlist_{{ playlist.id }}"
+                  name="playlist_{{ playlist.id }}"
+                  {%
+                  if
+                  playlist.monitored
+                  %}checked{%
+                  endif
+                  %}
+                >
+                <label for="playlist_{{ playlist.id }}" class="playlist-name">
+                  {{ playlist.name }} {% if playlist.monitored %}<span
+                    class="monitored-badge"
+                  >Monitored</span>{% endif %}
+                </label>
+              </div>
+              <div class="playlist-meta">
+                {{ playlist.track_count }} tracks {% if playlist.collaborative
+                %}(Collaborative){% endif %} • Owner: {{ playlist.owner }}
+              </div>
             </div>
           </div>
-          <div class="playlist-actions">
-            <a href="/select-playlist/{{ playlist.id }}" class="select-btn"
-            >Monitor</a>
-          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
+
+        <input
+          type="submit"
+          value="Update Monitored Playlists"
+          class="update-btn"
+        >
+      </form>
       {% endif %}
     </div>
 
