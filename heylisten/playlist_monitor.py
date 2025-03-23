@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -8,6 +9,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 from heylisten.notifications import NotificationManager
 
+# Set data directory for persistence
+data_dir = Path(os.getenv("DATA_DIR", "/app/data"))
+data_dir.mkdir(exist_ok=True)
 
 class PlaylistMonitor:
     """Monitor Spotify playlists for changes."""
@@ -17,8 +21,8 @@ class PlaylistMonitor:
         client_id: str,
         client_secret: str,
         market: str = "SE",
-        cache_dir: Path = Path("cache"),
-        db_path: str = "monitored_playlists.json",
+        cache_dir: Path = None,
+        db_path: str = None,
     ):
         # Spotify API credentials
         self.client_id = client_id
@@ -39,13 +43,13 @@ class PlaylistMonitor:
             )
         )
 
-        # Initialize cache directory
-        self.cache_dir = cache_dir
+        # Initialize cache directory with data persistence
+        self.cache_dir = cache_dir or data_dir / "cache"
         self.cache_dir.mkdir(exist_ok=True)
 
-        # Initialize playlist database
+        # Initialize playlist database with persistence
         from heylisten.db import PlaylistDatabase
-
+        db_path = db_path or str(data_dir / "monitored_playlists.json")
         self.db = PlaylistDatabase(db_path)
 
         # Cached playlist data - now a dictionary with playlist IDs as keys

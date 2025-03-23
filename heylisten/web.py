@@ -14,9 +14,11 @@ from heylisten.playlist_monitor import PlaylistMonitor
 # Initialize FastAPI app
 app = FastAPI(title="Heylisten", description="Spotify Playlist Monitor")
 
-# Set up templates directory
+# Set up templates directory - ensure it works both in development and when containerized
 templates_dir = Path(__file__).parent.parent / "templates"
-templates_dir.mkdir(exist_ok=True)
+if not templates_dir.exists():
+    # Try alternate path for Docker deployment
+    templates_dir = Path("/app/templates")
 templates = Jinja2Templates(directory=str(templates_dir))
 
 # Playlist monitor instance
@@ -28,6 +30,10 @@ client_secret = os.getenv("SPOT_CLIENT_SECRET", "")
 redirect_uri = os.getenv("SPOT_REDIRECT_URI", "http://localhost:8000/callback")
 scope = "playlist-read-collaborative playlist-read-private"
 
+# Data directory for persistence
+data_dir = Path(os.getenv("DATA_DIR", "/app/data"))
+data_dir.mkdir(exist_ok=True)
+
 # Store user playlists in memory (in a real app, use a proper session management)
 user_playlists: Dict[str, List[Dict[str, Any]]] = {}
 
@@ -37,12 +43,15 @@ def get_auth_manager():
     if not client_id or not client_secret:
         raise HTTPException(status_code=500, detail="Spotify credentials not configured")
 
+    # Use the data directory for the auth cache
+    cache_path = data_dir / ".spotify_auth_cache"
+    
     return SpotifyOAuth(
         client_id=client_id,
         client_secret=client_secret,
         redirect_uri=redirect_uri,
         scope=scope,
-        cache_path=".spotify_auth_cache",
+        cache_path=str(cache_path),
     )
 
 

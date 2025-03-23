@@ -2,6 +2,7 @@ import os
 import sys
 import threading
 import time
+from pathlib import Path
 
 import schedule
 from dotenv import load_dotenv
@@ -12,8 +13,13 @@ from heylisten.playlist_monitor import PlaylistMonitor
 # Load environment variables
 load_dotenv()
 
-# Configure logger
-logger.add("heylisten.log", rotation="10 MB", retention="7 days")
+# Set data directory for persistence
+data_dir = Path(os.getenv("DATA_DIR", "/app/data"))
+data_dir.mkdir(exist_ok=True)
+
+# Configure logger with persistence
+log_path = data_dir / "heylisten.log"
+logger.add(str(log_path), rotation="10 MB", retention="7 days")
 
 
 def start_monitor(monitor):
@@ -66,11 +72,16 @@ def main():
         logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
         sys.exit(1)
 
-    # Create and start the playlist monitor
+    # Create and start the playlist monitor with persistent directories
+    cache_dir = data_dir / "cache"
+    db_path = str(data_dir / "monitored_playlists.json")
+    
     monitor = PlaylistMonitor(
         client_id=client_id,
         client_secret=client_secret,
         market=market,
+        cache_dir=cache_dir,
+        db_path=db_path,
     )
 
     # Set up the web server
