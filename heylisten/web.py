@@ -50,6 +50,16 @@ def get_auth_manager():
 async def root(request: Request):
     """Render the main page."""
     stats = []
+    auth_manager = get_auth_manager()
+
+    if not auth_manager.get_cached_token():
+        # Not authenticated, redirect to login
+        return RedirectResponse(url="/login")
+
+    # Create Spotify client with the cached token
+    sp = spotipy.Spotify(auth_manager=auth_manager)
+    user_data = sp.current_user()
+    user_id = user_data["id"]
 
     # Get all monitored playlists
     monitored_playlists = []
@@ -68,7 +78,7 @@ async def root(request: Request):
                 )
 
     # Get user playlists if available
-    available_playlists = user_playlists.get("current", [])
+    available_playlists = user_playlists.get(user_id, [])
 
     # Mark which playlists are being monitored
     monitored_ids = [p["id"] for p in monitored_playlists]
@@ -129,6 +139,7 @@ async def load_playlists():
         # Create Spotify client with the cached token
         sp = spotipy.Spotify(auth_manager=auth_manager)
         user_data = sp.current_user()
+        user_id = user_data["id"]
 
         # Fetch user playlists with pagination
         playlists = []
@@ -140,11 +151,14 @@ async def load_playlists():
             results = sp.next(results)
             playlists.extend(results["items"])
 
-        logger.info(f"Fetched a total of {len(playlists)} playlists for user {user_data['id']}")
+        logger.info(f"Fetched a total of {len(playlists)} playlists for user {user_id}")
 
         # Filter for collaborative playlists and owned playlists
         collab_playlists = []
         for playlist in playlists:
+            logger.debug(
+                f"  - \"{playlist['name']}\": collaborative={playlist.get('collaborative')} owner={playlist.get('owner', {}).get('id')}"
+            )
             if (
                 playlist.get("collaborative")
                 # or playlist.get("owner", {}).get("id") != user_data["id"]
@@ -161,7 +175,7 @@ async def load_playlists():
                 )
 
         # Store playlists in memory
-        user_playlists["current"] = collab_playlists
+        user_playlists[user_id] = collab_playlists
 
         logger.info(
             f"Loaded {len(collab_playlists)} collaborative/owned playlists for user {user_data['id']}"
