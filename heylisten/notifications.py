@@ -3,7 +3,7 @@ Notifications module for Heylisten - handles sending notifications to users abou
 """
 
 import os
-from typing import Dict, List, Any
+from typing import Any, Dict, List
 
 from loguru import logger
 

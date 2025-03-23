@@ -1,15 +1,15 @@
 import os
 from pathlib import Path
-from typing import Optional, List, Dict, Any
-from urllib.parse import urlencode
+from typing import Any, Dict, List, Optional
 
-from fastapi import FastAPI, Request, HTTPException, Depends, Form
+import spotipy
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from loguru import logger
-import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+
+from heylisten.playlist_monitor import PlaylistMonitor
 
 # Initialize FastAPI app
 app = FastAPI(title="Heylisten", description="Spotify Playlist Monitor")
@@ -20,7 +20,7 @@ templates_dir.mkdir(exist_ok=True)
 templates = Jinja2Templates(directory=str(templates_dir))
 
 # Playlist monitor instance
-playlist_monitor: Optional[object] = None
+playlist_monitor: Optional[PlaylistMonitor] = None
 
 # OAuth settings
 client_id = os.getenv("SPOT_CLIENT_ID", "")
@@ -156,8 +156,13 @@ async def load_playlists():
         # Filter for collaborative playlists and owned playlists
         collab_playlists = []
         for playlist in playlists:
+            owner = playlist.get("owner", {}).get("id")
+            type = playlist.get("type")
+            is_collab = playlist.get("collaborative", False)
+            is_owner = owner == user_id
+            is_public = playlist.get("public")
             logger.debug(
-                f"  - \"{playlist['name']}\": collaborative={playlist.get('collaborative')} owner={playlist.get('owner', {}).get('id')}"
+                f"  - \"{playlist['name']}\": type={type} collaborative={is_collab} owner={owner} is_owner={is_owner} is_public={is_public}"
             )
             if (
                 playlist.get("collaborative")
@@ -168,9 +173,9 @@ async def load_playlists():
                     {
                         "id": playlist["id"],
                         "name": playlist["name"],
-                        "owner": playlist["owner"]["display_name"],
+                        "owner": owner,
                         "track_count": playlist["tracks"]["total"],
-                        "collaborative": playlist.get("collaborative", False),
+                        "collaborative": is_collab,
                     }
                 )
 
@@ -218,7 +223,7 @@ async def update_monitored_playlists(request: Request):
         logger.info(f"Updating monitored playlists for user {user_id}: {selected_ids}")
 
         # Update the database with selected playlists
-        all_playlists = user_playlists.get("current", [])
+        all_playlists = user_playlists.get(user_id, [])
         playlist_monitor.db.update_monitored_playlists(selected_ids, all_playlists, user_id)
 
         # Perform an immediate check
@@ -237,16 +242,6 @@ async def select_playlist(playlist_id: str):
         raise HTTPException(status_code=500, detail="Playlist monitor not initialized")
 
     try:
-        # Find the playlist in the available playlists
-        playlist_data = None
-        for playlist in user_playlists.get("current", []):
-            if playlist["id"] == playlist_id:
-                playlist_data = playlist
-                break
-
-        if not playlist_data:
-            raise HTTPException(status_code=404, detail="Playlist not found")
-
         # Get user_id from session or Spotify
         auth_manager = get_auth_manager()
         user_id = None
@@ -254,6 +249,16 @@ async def select_playlist(playlist_id: str):
             sp = spotipy.Spotify(auth_manager=auth_manager)
             user_data = sp.current_user()
             user_id = user_data["id"]
+
+        # Find the playlist in the available playlists
+        playlist_data = None
+        for playlist in user_playlists.get(user_id, []):
+            if playlist["id"] == playlist_id:
+                playlist_data = playlist
+                break
+
+        if not playlist_data:
+            raise HTTPException(status_code=404, detail="Playlist not found")
 
         # Add to database with user_id
         playlist_monitor.db.add_playlist(playlist_data, user_id)

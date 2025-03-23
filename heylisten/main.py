@@ -2,7 +2,6 @@ import os
 import sys
 import threading
 import time
-from pathlib import Path
 
 import schedule
 from dotenv import load_dotenv
@@ -50,8 +49,6 @@ def main():
     # Get environment variables
     client_id = os.getenv("SPOT_CLIENT_ID")
     client_secret = os.getenv("SPOT_CLIENT_SECRET")
-    redirect_uri = os.getenv("SPOT_REDIRECT_URI", "http://localhost:8000/callback")
-    playlist_id = os.getenv("SPOT_PLAYLIST_ID")  # Keep for backward compatibility
     market = os.getenv("SPOT_MARKET", "SE")
     web_port = int(os.getenv("WEB_PORT", "8000"))
     web_host = os.getenv("WEB_HOST", "0.0.0.0")
