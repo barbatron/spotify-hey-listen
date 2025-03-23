@@ -14,30 +14,28 @@ current status.
    poetry install
    ```
 
-3. Configure the `.env` file with your Spotify credentials and playlist ID:
+3. Set up your Spotify Developer Application:
+   - Go to
+     [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
+   - Create a new app
+   - Add `http://localhost:8000/spotify/callback` to the Redirect URIs
+
+4. Configure the `.env` file with your Spotify app credentials and more:
    ```
    SPOT_CLIENT_ID=your_spotify_client_id
    SPOT_CLIENT_SECRET=your_client_secret
-   SPOT_REDIRECT_URI=http://localhost:8000/callback
-   SPOT_PLAYLIST_ID=your_playlist_id_to_monitor
+   SPOT_REDIRECT_URI=http://localhost:8000/spotify/callback
    SPOT_PLAYLIST_MARKET=<iso_country_code>
    WEB_HOST=0.0.0.0
    WEB_PORT=8000
    ```
-
-4. Set up your Spotify Developer Application:
-   - Go to
-     [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
-   - Create a new app
-   - Add `http://localhost:8000/callback` to the Redirect URIs
-   - Copy your Client ID and Client Secret to the `.env` file
 
 ## Usage
 
 Run the application:
 
 ```bash
-poetry run python -m heylisten.main
+./run.sh # poetry run python -m heylisten.main
 ```
 
 The application will:
@@ -58,9 +56,7 @@ http://localhost:8000
 
 The web interface displays:
 
-- Current playlist name
-- Number of tracks
-- The ID of the playlist being monitored
+- Monitored playlists
 
 ### Loading Your Playlists
 
@@ -78,5 +74,6 @@ playlists.
 This project uses Ruff for linting. Run:
 
 ```bash
-poetry run ruff check .
+ci/format
+ci/lint # optionally, --fix
 ```
