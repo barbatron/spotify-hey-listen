@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heylisten - Spotify Playlist Monitor</title>
+    <style>
+      body {
+        font-family:
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          "Open Sans",
+          "Helvetica Neue",
+          sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+      }
+      h1 {
+        color: #1db954;
+      }
+      .stats {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .stat-item {
+        padding: 15px;
+      }
+      .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #1db954;
+      }
+      .stat-label {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+      }
+      .footer {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        margin-top: 40px;
+      }
+      a {
+        color: #1db954;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Heylisten</h1>
+      <p>Spotify Playlist Monitor</p>
+    </div>
+
+    <div class="container">
+      <h2>Playlist Status</h2>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value">{{ playlist_name }}</div>
+          <div class="stat-label">Playlist Name</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{{ track_count }}</div>
+          <div class="stat-label">Tracks</div>
+        </div>
+      </div>
+
+      <p>
+        Monitoring Spotify playlist ID: <code>{{ playlist_id }}</code>
+      </p>
+
+      <p>
+        The server is actively monitoring this playlist for any changes. When
+        tracks are added or removed, they will be logged automatically.
+      </p>
+    </div>
+
+    <div class="footer">
+      <p>
+        Powered by <a href="https://github.com/barbatron/heylisten"
+        >Heylisten</a>
+      </p>
+    </div>
+  </body>
+</html>

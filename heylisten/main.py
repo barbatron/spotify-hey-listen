@@ -1,5 +1,6 @@
 import json
 import os
+import threading
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -190,14 +191,33 @@ class PlaylistMonitor:
             logger.error(f"Error during playlist check: {e}")
 
 
+def start_monitor(monitor):
+    """Run the playlist monitor in a loop."""
+    # Do an initial check
+    monitor.check_for_changes()
+
+    # Schedule periodic checks
+    period = 30
+    schedule.every(period).seconds.do(monitor.check_for_changes)
+
+    logger.info(f"Playlist monitor started, checking for changes every {period} seconds")
+
+    # Keep the script running
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
 def main():
-    """Main function to run the playlist monitor."""
+    """Main function to run the playlist monitor and web server."""
     # Get environment variables
     client_id = os.getenv("SPOT_CLIENT_ID")
     client_secret = os.getenv("SPOT_CLIENT_SECRET")
     # redirect_uri = os.getenv("SPOT_CLIENT_REDIRECT_URI")
     playlist_id = os.getenv("SPOT_PLAYLIST_ID")
     market = os.getenv("SPOT_MARKET", "SE")
+    web_port = int(os.getenv("WEB_PORT", "8000"))
+    web_host = os.getenv("WEB_HOST", "0.0.0.0")
 
     # Validate environment variables
     missing_vars = []
@@ -213,6 +233,7 @@ def main():
         logger.error(f"Missing required environment variables: {', '.join(missing_vars)}")
         raise EnvironmentError(f"Missing required environment variables: {', '.join(missing_vars)}")
 
+    # Initialize playlist monitor
     monitor = PlaylistMonitor(
         client_id=client_id,
         client_secret=client_secret,
@@ -220,19 +241,19 @@ def main():
         market=market,
     )
 
-    # Do an initial check
-    monitor.check_for_changes()
-
-    # Schedule periodic checks (every 5 minutes)
-    period = 5
-    schedule.every(period).seconds.do(monitor.check_for_changes)
-
-    logger.info(f"Playlist monitor started, checking for changes every {period} seconds")
-
-    # Keep the script running
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # Create web server thread
+    from heylisten.web import set_playlist_monitor, start_web_server
+    
+    # Register the monitor with the web server
+    set_playlist_monitor(monitor)
+    
+    # Start monitor in a separate thread
+    monitor_thread = threading.Thread(target=start_monitor, args=(monitor,), daemon=True)
+    monitor_thread.start()
+    
+    # Start web server in the main thread
+    logger.info(f"Starting web server on {web_host}:{web_port}")
+    start_web_server(host=web_host, port=web_port)
 
 
 if __name__ == "__main__":
