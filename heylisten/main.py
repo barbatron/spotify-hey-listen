@@ -8,13 +8,13 @@ import schedule
 from dotenv import load_dotenv
 from loguru import logger
 
+from heylisten.config import data_dir
 from heylisten.playlist_monitor import PlaylistMonitor
 
 # Load environment variables
 load_dotenv()
 
 # Set data directory for persistence
-data_dir = Path(os.getenv("DATA_DIR", "/app/data"))
 data_dir.mkdir(exist_ok=True)
 
 # Configure logger with persistence
@@ -75,7 +75,7 @@ def main():
     # Create and start the playlist monitor with persistent directories
     cache_dir = data_dir / "cache"
     db_path = str(data_dir / "monitored_playlists.json")
-    
+
     monitor = PlaylistMonitor(
         client_id=client_id,
         client_secret=client_secret,

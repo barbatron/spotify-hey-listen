@@ -53,6 +53,7 @@ RUN chmod +x run.sh
 VOLUME ["/app/data"]
 
 # Set environment variables
+ENV DATA_DIR="/app/data"
 ENV WEB_HOST=0.0.0.0
 ENV WEB_PORT=8000
 

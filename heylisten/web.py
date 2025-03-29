@@ -1,15 +1,17 @@
 import os
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import spotipy
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from loguru import logger
 from spotipy.oauth2 import SpotifyOAuth
 
 from heylisten.playlist_monitor import PlaylistMonitor
+from heylisten.config import data_dir
 
 # Initialize FastAPI app
 app = FastAPI(title="Heylisten", description="Spotify Playlist Monitor")
@@ -30,10 +32,6 @@ client_secret = os.getenv("SPOT_CLIENT_SECRET", "")
 redirect_uri = os.getenv("SPOT_REDIRECT_URI", "http://localhost:8000/callback")
 scope = "playlist-read-collaborative playlist-read-private"
 
-# Data directory for persistence
-data_dir = Path(os.getenv("DATA_DIR", "/app/data"))
-data_dir.mkdir(exist_ok=True)
-
 # Store user playlists in memory (in a real app, use a proper session management)
 user_playlists: Dict[str, List[Dict[str, Any]]] = {}
 
@@ -45,7 +43,7 @@ def get_auth_manager():
 
     # Use the data directory for the auth cache
     cache_path = data_dir / ".spotify_auth_cache"
-    
+
     return SpotifyOAuth(
         client_id=client_id,
         client_secret=client_secret,
@@ -286,6 +284,76 @@ async def select_playlist(playlist_id: str):
 async def health_check():
     """Return health status of the application."""
     return {"status": "healthy", "monitor_active": playlist_monitor is not None}
+
+
+@app.post("/add-playlist-by-url")
+async def add_playlist_by_url(playlist_url: str = Form(...)):
+    """Add a playlist to monitor by URL."""
+    if not playlist_monitor:
+        raise HTTPException(status_code=500, detail="Playlist monitor not initialized")
+
+    try:
+        # Extract playlist ID from URL
+        # URLs can be in format: https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd
+        # or spotify:playlist:37i9dQZF1DX0XUsuxWHRQd
+        playlist_id = None
+
+        # Match URLs like https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd
+        url_match = re.search(r"spotify\.com/playlist/([a-zA-Z0-9]+)", playlist_url)
+        if url_match:
+            playlist_id = url_match.group(1)
+
+        # Match URIs like spotify:playlist:37i9dQZF1DX0XUsuxWHRQd
+        uri_match = re.search(r"spotify:playlist:([a-zA-Z0-9]+)", playlist_url)
+        if uri_match:
+            playlist_id = uri_match.group(1)
+
+        if not playlist_id:
+            raise HTTPException(status_code=400, detail="Invalid Spotify playlist URL")
+
+        logger.info(f"Adding playlist by ID: {playlist_id}")
+
+        # Get user_id from session or Spotify
+        auth_manager = get_auth_manager()
+        user_id = None
+        if not auth_manager.get_cached_token():
+          # Not authenticated, redirect to login
+          return RedirectResponse(url="/login")
+
+        # Create Spotify client with the cached token
+        sp = spotipy.Spotify(auth_manager=auth_manager)
+        user_data = sp.current_user()
+        user_id = user_data["id"]
+        
+        # Try to fetch the playlist from Spotify
+        try:
+            playlist_data = sp.playlist(playlist_id, market=playlist_monitor.market)
+
+            # Extract necessary info for monitoring
+            simplified_data = {
+                "id": playlist_data["id"],
+                "name": playlist_data["name"],
+                "owner": playlist_data["owner"]["id"],
+                "track_count": playlist_data["tracks"]["total"],
+                "collaborative": playlist_data.get("collaborative", False),
+            }
+
+            # Add to database with user_id
+            playlist_monitor.db.add_playlist(simplified_data, user_id)
+
+            # Perform an immediate check
+            playlist_monitor.check_for_changes()
+
+            logger.info(f"Successfully added playlist '{simplified_data['name']}' to monitoring")
+            return RedirectResponse(url="/", status_code=303)
+
+        except Exception as e:
+            logger.error(f"Error fetching playlist {playlist_id}: {e}")
+            raise HTTPException(status_code=404, detail=f"Could not fetch playlist: {str(e)}")
+
+    except Exception as e:
+        logger.error(f"Error adding playlist by URL: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 def set_playlist_monitor(monitor):

@@ -8,10 +8,7 @@ from loguru import logger
 from spotipy.oauth2 import SpotifyClientCredentials
 
 from heylisten.notifications import NotificationManager
-
-# Set data directory for persistence
-data_dir = Path(os.getenv("DATA_DIR", "/app/data"))
-data_dir.mkdir(exist_ok=True)
+from heylisten.config import data_dir
 
 class PlaylistMonitor:
     """Monitor Spotify playlists for changes."""
