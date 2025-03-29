@@ -163,6 +163,28 @@
         padding-top: 20px;
         border-top: 1px solid #eee;
       }
+      .stop-monitoring-btn {
+        background-color: #e74c3c;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        text-decoration: none;
+        margin-left: 10px;
+      }
+      .stop-monitoring-btn:hover {
+        background-color: #c0392b;
+        text-decoration: none;
+      }
+      .monitored-playlist-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      .monitored-actions {
+        margin-left: 10px;
+      }
     </style>
   </head>
   <body>
@@ -178,7 +200,18 @@
       <div class="stats">
         {% for playlist in stats %}
         <div class="stat-item">
-          <div class="stat-value">{{ playlist.name }}</div>
+          <div class="monitored-playlist-item">
+            <div class="stat-value">{{ playlist.name }}</div>
+            <div class="monitored-actions">
+              <a
+                href="/stop-monitoring/{{ playlist.id }}"
+                class="stop-monitoring-btn"
+                onclick="return confirm('Are you sure you want to stop monitoring this playlist?')"
+              >
+                Stop monitoring
+              </a>
+            </div>
+          </div>
           <div class="stat-label">{{ playlist.track_count }} tracks</div>
         </div>
         {% endfor %}

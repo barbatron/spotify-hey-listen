@@ -68,10 +68,11 @@ async def root(request: Request):
     user_data = sp.current_user()
     user_id = user_data["id"]
 
-    # Get all monitored playlists
+    # Get only playlists monitored by this user
     monitored_playlists = []
     if playlist_monitor:
-        monitored_playlists = playlist_monitor.db.get_playlists()
+        # Get only playlists monitored by this user instead of all playlists
+        monitored_playlists = playlist_monitor.db.get_user_playlists(user_id)
         for playlist in monitored_playlists:
             playlist_id = playlist["id"]
             if playlist_id in playlist_monitor.cached_playlists:
@@ -87,7 +88,7 @@ async def root(request: Request):
     # Get user playlists if available
     available_playlists = user_playlists.get(user_id, [])
 
-    # Mark which playlists are being monitored
+    # Mark which playlists are being monitored by this user
     monitored_ids = [p["id"] for p in monitored_playlists]
     for playlist in available_playlists:
         playlist["monitored"] = playlist["id"] in monitored_ids
@@ -286,6 +287,52 @@ async def health_check():
     return {"status": "healthy", "monitor_active": playlist_monitor is not None}
 
 
+@app.get("/stop-monitoring/{playlist_id}")
+async def stop_monitoring(playlist_id: str):
+    """Stop monitoring a specific playlist for the current user."""
+    if not playlist_monitor:
+        raise HTTPException(status_code=500, detail="Playlist monitor not initialized")
+
+    try:
+        # Get user_id from session or Spotify
+        auth_manager = get_auth_manager()
+        user_id = None
+        if not auth_manager.get_cached_token():
+            # Not authenticated, redirect to login
+            return RedirectResponse(url="/login")
+
+        # Create Spotify client with the cached token
+        sp = spotipy.Spotify(auth_manager=auth_manager)
+        user_data = sp.current_user()
+        user_id = user_data["id"]
+
+        # Get all playlists from the database
+        all_playlists = playlist_monitor.db.get_playlists()
+        
+        # Find the user's specific instance of this playlist
+        for i, playlist in enumerate(all_playlists):
+            if playlist["id"] == playlist_id and playlist.get("user_id") == user_id:
+                # Remove this playlist from the list
+                all_playlists.pop(i)
+                # Save updated list back to database
+                playlist_monitor.db.save_playlists(all_playlists)
+                
+                logger.info(f"User {user_id} stopped monitoring playlist {playlist_id}")
+                
+                # Update the user_playlists memory cache
+                if user_id in user_playlists:
+                    for p in user_playlists[user_id]:
+                        if p["id"] == playlist_id:
+                            p["monitored"] = False
+                
+                break
+        
+        return RedirectResponse(url="/")
+    except Exception as e:
+        logger.error(f"Error stopping playlist monitoring: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/add-playlist-by-url")
 async def add_playlist_by_url(playlist_url: str = Form(...)):
     """Add a playlist to monitor by URL."""
@@ -317,13 +364,20 @@ async def add_playlist_by_url(playlist_url: str = Form(...)):
         auth_manager = get_auth_manager()
         user_id = None
         if not auth_manager.get_cached_token():
-          # Not authenticated, redirect to login
-          return RedirectResponse(url="/login")
+            # Not authenticated, redirect to login
+            return RedirectResponse(url="/login")
 
         # Create Spotify client with the cached token
         sp = spotipy.Spotify(auth_manager=auth_manager)
         user_data = sp.current_user()
         user_id = user_data["id"]
+        
+        # Check if playlist is already monitored by this user
+        user_monitored_playlists = playlist_monitor.db.get_user_playlists(user_id)
+        for existing_playlist in user_monitored_playlists:
+            if existing_playlist["id"] == playlist_id:
+                logger.info(f"Playlist {playlist_id} is already monitored by user {user_id}")
+                return RedirectResponse(url="/", status_code=303)
         
         # Try to fetch the playlist from Spotify
         try:
@@ -336,15 +390,30 @@ async def add_playlist_by_url(playlist_url: str = Form(...)):
                 "owner": playlist_data["owner"]["id"],
                 "track_count": playlist_data["tracks"]["total"],
                 "collaborative": playlist_data.get("collaborative", False),
+                "user_id": user_id,  # Explicitly set the user_id in the data
             }
 
             # Add to database with user_id
             playlist_monitor.db.add_playlist(simplified_data, user_id)
 
+            # Update user_playlists in memory if this is a new playlist
+            if user_id in user_playlists:
+                # Check if playlist is already in the list
+                playlist_exists = False
+                for p in user_playlists[user_id]:
+                    if p["id"] == simplified_data["id"]:
+                        playlist_exists = True
+                        break
+                
+                if not playlist_exists:
+                    # Add the playlist to the user's list with monitored flag
+                    simplified_data["monitored"] = True
+                    user_playlists[user_id].append(simplified_data)
+
             # Perform an immediate check
             playlist_monitor.check_for_changes()
 
-            logger.info(f"Successfully added playlist '{simplified_data['name']}' to monitoring")
+            logger.info(f"Successfully added playlist '{simplified_data['name']}' to monitoring for user {user_id}")
             return RedirectResponse(url="/", status_code=303)
 
         except Exception as e:
