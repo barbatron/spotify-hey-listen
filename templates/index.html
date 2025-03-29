@@ -37,12 +37,18 @@
       }
       .stats {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
         text-align: center;
         margin: 20px 0;
       }
       .stat-item {
         padding: 15px;
+        margin: 10px;
+        flex: 0 1 45%;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        background-color: #f5f5f5;
       }
       .stat-value {
         font-size: 24px;
@@ -114,7 +120,7 @@
       }
       .playlist-list {
         margin-top: 20px;
-        max-height: 300px;
+        max-height: 400px;
         overflow-y: auto;
         border-top: 1px solid #eee;
       }
@@ -185,6 +191,14 @@
       .monitored-actions {
         margin-left: 10px;
       }
+      .instruction-text {
+        background-color: #f8f9fa;
+        border-left: 4px solid #1db954;
+        padding: 10px 15px;
+        margin: 15px 0;
+        font-size: 14px;
+        color: #555;
+      }
     </style>
   </head>
   <body>
@@ -194,51 +208,20 @@
     </div>
 
     <div class="container">
-      <h2>Monitored Playlists</h2>
-
-      {% if stats %}
-      <div class="stats">
-        {% for playlist in stats %}
-        <div class="stat-item">
-          <div class="monitored-playlist-item">
-            <div class="stat-value">{{ playlist.name }}</div>
-            <div class="monitored-actions">
-              <a
-                href="/stop-monitoring/{{ playlist.id }}"
-                class="stop-monitoring-btn"
-                onclick="return confirm('Are you sure you want to stop monitoring this playlist?')"
-              >
-                Stop monitoring
-              </a>
-            </div>
-          </div>
-          <div class="stat-label">{{ playlist.track_count }} tracks</div>
-        </div>
-        {% endfor %}
-      </div>
-
-      <p>
-        Currently monitoring {{ monitored_count }} playlist{% if monitored_count
-        != 1 %}s{% endif %}.
-      </p>
-      {% else %}
-      <p>
-        No playlists are currently being monitored. Select playlists below to
-        start monitoring.
-      </p>
-      {% endif %}
-
-      <div style="text-align: center">
-        <a href="/login" class="button">Load My Playlists</a>
-      </div>
+      <h2>Your Spotify Playlists</h2>
 
       {% if playlists %}
       <form action="/update-monitored-playlists" method="post">
         <div class="playlist-list">
-          <h3>Your Playlists</h3>
-          <p>Select the playlists you want to monitor:</p>
+          <div class="instruction-text">
+            <strong>How to use:</strong> Check the boxes of playlists you want
+            to monitor. To stop monitoring a playlist, simply uncheck its box
+            and click "Update".
+          </div>
 
-          {% for playlist in playlists %}
+          {% if monitored_count > 0 %}
+          <h3>Currently Monitored ({{ monitored_count }})</h3>
+          {% for playlist in playlists %} {% if playlist.monitored %}
           <div class="playlist-item">
             <div>
               <div class="checkbox-container">
@@ -246,17 +229,11 @@
                   type="checkbox"
                   id="playlist_{{ playlist.id }}"
                   name="playlist_{{ playlist.id }}"
-                  {%
-                  if
-                  playlist.monitored
-                  %}checked{%
-                  endif
-                  %}
+                  checked
                 >
                 <label for="playlist_{{ playlist.id }}" class="playlist-name">
-                  {{ playlist.name }} {% if playlist.monitored %}<span
-                    class="monitored-badge"
-                  >Monitored</span>{% endif %}
+                  {{ playlist.name }} <span class="monitored-badge"
+                  >Monitored</span>
                 </label>
               </div>
               <div class="playlist-meta">
@@ -265,7 +242,30 @@
               </div>
             </div>
           </div>
-          {% endfor %}
+          {% endif %} {% endfor %}
+
+          <h3>Available to Monitor</h3>
+          {% endif %} {% for playlist in playlists %} {% if not
+          playlist.monitored %}
+          <div class="playlist-item">
+            <div>
+              <div class="checkbox-container">
+                <input
+                  type="checkbox"
+                  id="playlist_{{ playlist.id }}"
+                  name="playlist_{{ playlist.id }}"
+                >
+                <label for="playlist_{{ playlist.id }}" class="playlist-name">
+                  {{ playlist.name }}
+                </label>
+              </div>
+              <div class="playlist-meta">
+                {{ playlist.track_count }} tracks {% if playlist.collaborative
+                %}(Collaborative){% endif %} • Owner: {{ playlist.owner }}
+              </div>
+            </div>
+          </div>
+          {% endif %} {% endfor %}
         </div>
 
         <input
@@ -274,6 +274,8 @@
           class="update-btn"
         >
       </form>
+      {% else %}
+      <p>No playlists were found in your Spotify account.</p>
       {% endif %}
 
       <div class="add-url-container">

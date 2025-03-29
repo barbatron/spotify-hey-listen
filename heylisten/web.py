@@ -68,11 +68,13 @@ async def root(request: Request):
     user_data = sp.current_user()
     user_id = user_data["id"]
 
-    # Get only playlists monitored by this user
+    # Get playlists monitored by this user
     monitored_playlists = []
+    monitored_ids = []
     if playlist_monitor:
-        # Get only playlists monitored by this user instead of all playlists
         monitored_playlists = playlist_monitor.db.get_user_playlists(user_id)
+        monitored_ids = [p["id"] for p in monitored_playlists]
+        
         for playlist in monitored_playlists:
             playlist_id = playlist["id"]
             if playlist_id in playlist_monitor.cached_playlists:
@@ -85,13 +87,43 @@ async def root(request: Request):
                     }
                 )
 
-    # Get user playlists if available
-    available_playlists = user_playlists.get(user_id, [])
+    # Load user playlists automatically
+    user_playlists_data = []
+    try:
+        # Fetch user playlists with pagination
+        playlists = []
+        results = sp.current_user_playlists(limit=50)
+        playlists.extend(results["items"])
 
-    # Mark which playlists are being monitored by this user
-    monitored_ids = [p["id"] for p in monitored_playlists]
-    for playlist in available_playlists:
-        playlist["monitored"] = playlist["id"] in monitored_ids
+        # Handle pagination to get all playlists
+        while results["next"]:
+            results = sp.next(results)
+            playlists.extend(results["items"])
+
+        logger.info(f"Fetched a total of {len(playlists)} playlists for user {user_id}")
+
+        # Process all playlists, marking which ones are already monitored
+        for playlist in playlists:
+            owner = playlist.get("owner", {}).get("id")
+            is_collab = playlist.get("collaborative", False)
+            is_owner = owner == user_id
+            
+            playlist_data = {
+                "id": playlist["id"],
+                "name": playlist["name"],
+                "owner": owner,
+                "track_count": playlist["tracks"]["total"],
+                "collaborative": is_collab,
+                "monitored": playlist["id"] in monitored_ids
+            }
+            user_playlists_data.append(playlist_data)
+            
+        # Store playlists in memory for other functions
+        user_playlists[user_id] = user_playlists_data
+
+    except Exception as e:
+        logger.error(f"Error loading playlists: {e}")
+        # Continue with empty playlists list if there's an error
 
     return templates.TemplateResponse(
         "index.html",
@@ -99,7 +131,7 @@ async def root(request: Request):
             "request": request,
             "stats": stats,
             "monitored_count": len(monitored_playlists),
-            "playlists": available_playlists,
+            "playlists": user_playlists_data,
         },
     )
 
@@ -128,76 +160,9 @@ async def callback(code: str = None, error: str = None):
     try:
         auth_manager = get_auth_manager()
         auth_manager.get_access_token(code)
-        return RedirectResponse(url="/load-playlists")
-    except Exception as e:
-        logger.error(f"Callback error: {e}")
-        return {"error": str(e)}
-
-
-@app.get("/load-playlists")
-async def load_playlists():
-    """Load user's collaborative playlists from Spotify."""
-    try:
-        auth_manager = get_auth_manager()
-
-        if not auth_manager.get_cached_token():
-            # Not authenticated, redirect to login
-            return RedirectResponse(url="/login")
-
-        # Create Spotify client with the cached token
-        sp = spotipy.Spotify(auth_manager=auth_manager)
-        user_data = sp.current_user()
-        user_id = user_data["id"]
-
-        # Fetch user playlists with pagination
-        playlists = []
-        results = sp.current_user_playlists(limit=50)
-        playlists.extend(results["items"])
-
-        # Handle pagination to get all playlists
-        while results["next"]:
-            results = sp.next(results)
-            playlists.extend(results["items"])
-
-        logger.info(f"Fetched a total of {len(playlists)} playlists for user {user_id}")
-
-        # Filter for collaborative playlists and owned playlists
-        collab_playlists = []
-        for playlist in playlists:
-            owner = playlist.get("owner", {}).get("id")
-            type = playlist.get("type")
-            is_collab = playlist.get("collaborative", False)
-            is_owner = owner == user_id
-            is_public = playlist.get("public")
-            logger.debug(
-                f"  - \"{playlist['name']}\": type={type} collaborative={is_collab} owner={owner} is_owner={is_owner} is_public={is_public}"
-            )
-            if (
-                playlist.get("collaborative")
-                # or playlist.get("owner", {}).get("id") != user_data["id"]
-            ):
-                logger.debug(f"Adding playlist: {playlist['name']}")
-                collab_playlists.append(
-                    {
-                        "id": playlist["id"],
-                        "name": playlist["name"],
-                        "owner": owner,
-                        "track_count": playlist["tracks"]["total"],
-                        "collaborative": is_collab,
-                    }
-                )
-
-        # Store playlists in memory
-        user_playlists[user_id] = collab_playlists
-
-        logger.info(
-            f"Loaded {len(collab_playlists)} collaborative/owned playlists for user {user_data['id']}"
-        )
-
-        # Redirect back to main page
         return RedirectResponse(url="/")
     except Exception as e:
-        logger.error(f"Error loading playlists: {e}")
+        logger.error(f"Callback error: {e}")
         return {"error": str(e)}
 
 
@@ -228,8 +193,16 @@ async def update_monitored_playlists(request: Request):
             user_data = sp.current_user()
             user_id = user_data["id"]
 
-        logger.info(f"Updating monitored playlists for user {user_id}: {selected_ids}")
-
+        # Get current monitored playlists for this user
+        user_monitored_playlists = playlist_monitor.db.get_user_playlists(user_id)
+        currently_monitored_ids = [p["id"] for p in user_monitored_playlists]
+        
+        # Log which playlists are being removed from monitoring
+        removed_ids = [pid for pid in currently_monitored_ids if pid not in selected_ids]
+        if removed_ids:
+            removed_names = [p["name"] for p in user_monitored_playlists if p["id"] in removed_ids]
+            logger.info(f"User {user_id} is stopping monitoring for playlists: {', '.join(removed_names)}")
+        
         # Update the database with selected playlists
         all_playlists = user_playlists.get(user_id, [])
         playlist_monitor.db.update_monitored_playlists(selected_ids, all_playlists, user_id)
