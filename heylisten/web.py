@@ -12,9 +12,14 @@ from spotipy.oauth2 import SpotifyOAuth
 
 from heylisten.playlist_monitor import PlaylistMonitor
 from heylisten.config import data_dir
+from starlette.middleware.sessions import SessionMiddleware
 
 # Initialize FastAPI app
 app = FastAPI(title="Heylisten", description="Spotify Playlist Monitor")
+
+# Set up session middleware for user sessions
+app.add_middleware(SessionMiddleware, secret_key="your_secret_key", max_age=3600)
+
 
 # Set up templates directory - ensure it works both in development and when containerized
 templates_dir = Path(__file__).parent.parent / "templates"
@@ -67,6 +72,7 @@ async def root(request: Request):
     sp = spotipy.Spotify(auth_manager=auth_manager)
     user_data = sp.current_user()
     user_id = user_data["id"]
+    request.session.update({"user_id": user_id})
 
     # Get playlists monitored by this user
     monitored_playlists = []
@@ -396,6 +402,63 @@ async def add_playlist_by_url(playlist_url: str = Form(...)):
     except Exception as e:
         logger.error(f"Error adding playlist by URL: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/notifications/discord")
+async def discord_config_page(request: Request):
+    """Discord notification configuration page."""
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=303)
+
+    return templates.TemplateResponse(
+        "discord_config.html",
+        {"request": request, "user_id": user_id}
+    )
+
+
+@app.post("/notifications/discord")
+async def save_discord_webhook(request: Request):
+    """Save Discord webhook URL for a user."""
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=303)
+        
+    form_data = await request.form()
+    webhook_url = form_data.get("webhook_url")
+    
+    if not webhook_url or not webhook_url.startswith("https://discord.com/api/webhooks/"):
+        return templates.TemplateResponse(
+            "discord_config.html",
+            {
+                "request": request, 
+                "user_id": user_id, 
+                "error": "Invalid Discord webhook URL. It should start with https://discord.com/api/webhooks/"
+            }
+        )
+    
+    # Save webhook URL
+    success = playlist_monitor.notification_manager.register_discord_webhook(user_id, webhook_url)
+    
+    if success:
+        logger.info(f"Discord webhook registered for user {user_id}")
+        return templates.TemplateResponse(
+            "discord_config.html",
+            {
+                "request": request, 
+                "user_id": user_id, 
+                "success": "Discord webhook configured successfully!"
+            }
+        )
+    else:
+        return templates.TemplateResponse(
+            "discord_config.html",
+            {
+                "request": request, 
+                "user_id": user_id, 
+                "error": "Failed to save Discord webhook configuration."
+            }
+        )
 
 
 def set_playlist_monitor(monitor):
